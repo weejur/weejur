@@ -53,13 +53,13 @@ function generateOAuthState() {
     Array.from(crypto.getRandomValues(new Uint8Array(16)))
       .map((b) => b.toString(16).padStart(2, "0"))
       .join("");
-  sessionStorage.setItem("weejur_oauth_state", state);
+  localStorage.setItem("weejur_oauth_state", state);
   return state;
 }
 
 function verifyOAuthState(state) {
-  const expected = sessionStorage.getItem("weejur_oauth_state");
-  sessionStorage.removeItem("weejur_oauth_state");
+  const expected = localStorage.getItem("weejur_oauth_state");
+  localStorage.removeItem("weejur_oauth_state");
   return state && state === expected;
 }
 
