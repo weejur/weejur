@@ -28,6 +28,7 @@ const siteUrl = `https://${username}.github.io/${repo}/`;
 const repoFullName = `${username}/${repo}`;
 
 if (updated) {
+  document.title = "weejur — Site updated!";
   $("done-heading").textContent = "Your site has been updated";
   document.querySelector("#site-status-live .site-status-hint").textContent =
     "Be patient — it may take a few minutes for your updates to appear.";
