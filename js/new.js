@@ -27,7 +27,7 @@ if (isUpdateMode) {
   $("publishing-heading").textContent = "Updating your site...";
   const uploadHint = document.createElement("p");
   uploadHint.textContent = "Make sure you include all your website's files, not just the ones that are new or updated.";
-  $("panel-upload").querySelector("p").after(uploadHint);
+  $("upload-warning").before(uploadHint);
 }
 
 // =============================================================================
