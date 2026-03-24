@@ -1,0 +1,5 @@
+.dev.vars
+.DS_Store
+.claude/
+.wrangler/
+CLAUDE.md
