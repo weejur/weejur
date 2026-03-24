@@ -3,29 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ShipSite — New Site</title>
+  <title>weejur — New Site</title>
+  <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <nav class="nav-bar">
-    <a href="index.html" class="nav-logo">ShipSite</a>
+    <a href="index.html" class="nav-logo">weejur</a>
     <div class="nav-right">
       <span id="nav-username"></span>
       <a href="dashboard.html" class="btn btn-secondary btn-small">My sites</a>
-      <button id="btn-signout" class="btn btn-secondary btn-small">Sign out</button>
+      <button id="btn-signout" class="btn btn-ghost btn-small">Sign out</button>
     </div>
   </nav>
 
   <div class="container">
     <!-- Step: Choose Files -->
     <section id="step-files" class="step active">
-      <div class="step-number" id="files-step-label">Step 1</div>
       <h2 id="files-heading">Add your website content</h2>
       <div class="tab-bar">
-        <button id="tab-upload" class="tab active" data-tab="upload">Upload files</button>
-        <button id="tab-paste" class="tab" data-tab="paste">Paste HTML</button>
+        <button id="tab-paste" class="tab active" data-tab="paste">Paste HTML</button>
+        <button id="tab-upload" class="tab" data-tab="upload">Upload files</button>
       </div>
-      <div id="panel-upload" class="tab-panel">
+      <div id="panel-paste" class="tab-panel">
+        <p>Paste your HTML below — for example, code from ChatGPT or another AI chatbot. This will become your site's <code>index.html</code>.</p>
+        <textarea id="html-paste" class="html-paste" placeholder="Paste your HTML here..." spellcheck="false"></textarea>
+        <div style="text-align: right;">
+          <button id="btn-paste-next" class="btn btn-primary">Next &rarr;</button>
+        </div>
+      </div>
+      <div id="panel-upload" class="tab-panel" hidden>
         <p>Select the folder containing your website files (HTML, CSS, images, etc). If you used an AI chatbot to create your site, download the files first and put them in a folder.</p>
         <div id="drop-zone" class="drop-zone">
           <div class="drop-zone-content">
@@ -44,23 +51,17 @@
           <h3>Selected files:</h3>
           <ul id="file-list-items"></ul>
           <div class="file-actions">
-            <button id="btn-clear-files" class="btn btn-secondary btn-small">Clear and re-select</button>
-            <button id="btn-files-next" class="btn btn-primary">Next</button>
+            <button id="btn-clear-files" class="btn btn-secondary btn-muted btn-small">Clear and re-select</button>
+            <button id="btn-files-next" class="btn btn-primary">Next &rarr;</button>
           </div>
         </div>
       </div>
-      <div id="panel-paste" class="tab-panel" hidden>
-        <p>Paste your HTML below — for example, code from ChatGPT or another AI chatbot. This will become your site's <code>index.html</code>.</p>
-        <textarea id="html-paste" class="html-paste" placeholder="Paste your HTML here..." spellcheck="false"></textarea>
-        <button id="btn-paste-next" class="btn btn-primary">Next</button>
-      </div>
     </section>
 
-    <!-- Step: Name Your Site (hidden in edit mode) -->
+    <!-- Step: Name Your Site (hidden in update mode) -->
     <section id="step-name" class="step">
-      <div class="step-number">Step 2</div>
       <h2>Name your site</h2>
-      <p>This will be part of your website's address.</p>
+      <p>This will be part of your website's URL.</p>
       <div class="name-input-group">
         <input type="text" id="site-name" placeholder="my-awesome-site" autocomplete="off" spellcheck="false">
         <div class="url-preview">Your site will be at: <strong id="url-preview-text">https://username.github.io/my-awesome-site</strong></div>
@@ -71,7 +72,6 @@
 
     <!-- Step: Publishing -->
     <section id="step-publishing" class="step">
-      <div class="step-number">Almost there!</div>
       <h2 id="publishing-heading">Publishing your site...</h2>
       <div class="progress-steps">
         <div id="ps-repo" class="progress-step">Creating a home for your files...</div>
@@ -82,7 +82,6 @@
 
     <!-- Step: Done! -->
     <section id="step-done" class="step">
-      <div class="step-number">Done!</div>
       <h2 id="done-heading">Your site has been published!</h2>
       <div id="site-status-checking" class="site-status">
         <div class="site-status-spinner"></div>
@@ -115,6 +114,20 @@
       </div>
     </section>
   </div>
+
+  <footer class="landing-footer">
+    <div class="footer-inner">
+      <div class="footer-text">
+        <p>Made by <a href="https://npilk.com" target="_blank" rel="noopener">npilk</a></p>
+        <p><a href="https://github.com" target="_blank" rel="noopener">GitHub</a> and <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a> &copy; Microsoft</p>
+        <p>weejur is not affiliated with GitHub.</p>
+        <p>Questions? <a href="mailto:contact@weejur.com">Send us an email</a></p>
+      </div>
+      <div class="footer-image">
+        <img src="cabin-complete.png" alt="Animal construction workers smiling in front of a finished log cabin">
+      </div>
+    </div>
+  </footer>
 
   <script src="shared.js"></script>
   <script src="new.js"></script>

@@ -3,63 +3,225 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ShipSite — Host your website for free</title>
+  <title>weejur — Share a website for free</title>
+  <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
-  <div class="container">
-    <header>
-      <h1>ShipSite</h1>
-      <p class="tagline">Get your website online for free in under 2 minutes.</p>
-    </header>
+<body class="landing">
+  <nav class="nav-bar">
+    <a href="index.html" class="nav-logo">weejur</a>
+    <div class="nav-right">
+      <button id="nav-signin" class="btn btn-ghost btn-small">Sign in with GitHub</button>
+    </div>
+  </nav>
 
-    <section id="step-signin" class="step active">
-      <h2>Sign in with GitHub</h2>
-      <p>GitHub is a free service that will store and host your website files. If you don't have an account yet, you'll be able to create one for free.</p>
-      <button id="btn-signin" class="btn btn-primary btn-large">
-        <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
-        Sign in with GitHub
-      </button>
-    </section>
+  <!-- Login modal -->
+  <div id="login-overlay" class="modal-overlay" hidden>
+    <div class="login-card">
+      <div class="login-wordmark"><img src="login.png" style="max-width:100px;"></div>
 
-    <section id="step-loading" class="step">
-      <div class="loading-spinner">Signing you in...</div>
-    </section>
+      <!-- Default: sign-in view -->
+      <div id="view-signin">
+        <h2 class="login-title">Log in with GitHub to <span style="white-space:nowrap">publish your site</span></h2>
+        <p class="login-subtitle">weejur uses GitHub Pages to host your website for free. Sign in with GitHub to get started.</p>
+        <p class="login-subtitle">Don't have a GitHub account? No problem! You can make one for free on the next page.</p>
+        <button id="btn-signin" class="btn btn-primary btn-large">
+          <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+          Sign in with GitHub
+        </button>
+      </div>
 
-    <section id="step-error" class="step">
-      <h2>Something went wrong</h2>
-      <p id="error-message"></p>
-      <button id="btn-retry" class="btn btn-primary">Try again</button>
-    </section>
+      <!-- Loading view -->
+      <div id="view-loading" hidden>
+        <p class="login-subtitle">Signing you in...</p>
+        <div class="site-status-spinner" style="border-color: var(--coral); border-top-color: transparent; margin: 24px auto 0;"></div>
+      </div>
 
-    <footer>
-      <p>ShipSite is free and <a href="https://github.com/shipsite/shipsite" target="_blank" rel="noopener">open source</a>. Your files are stored on GitHub.</p>
-    </footer>
+      <!-- Error view -->
+      <div id="view-error" hidden>
+        <h2 class="login-title">Something went wrong</h2>
+        <p id="error-message" class="login-subtitle"></p>
+        <button id="btn-retry" class="btn btn-primary btn-large">Try again</button>
+      </div>
+    </div>
   </div>
+
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-left">
+        <h1 class="hero-headline">Share your website with the world, for&nbsp;<em>free</em></h1>
+        <p class="hero-sub">Turn your HTML into a live, public website in seconds with GitHub Pages. No hosting to configure, no servers to manage, no monthly subscription.</p>
+      </div>
+      <div class="hero-right">
+        <img src="cabin-construction.png" alt="Pixel art of animal construction workers building a log cabin">
+      </div>
+    </div>
+    <div class="hero-picker">
+      <div class="landing-picker">
+        <div class="tab-bar">
+          <button id="tab-paste" class="tab active" data-tab="paste">Paste HTML</button>
+          <button id="tab-upload" class="tab" data-tab="upload">Upload files</button>
+        </div>
+        <div id="panel-paste" class="tab-panel">
+          <p class="paste-hint" style="padding-right:0.5rem;">Paste your HTML below — for example, code from ChatGPT, Claude, or a website builder. Want to test it out? Try asking ChatGPT to make you a website about ducks.</p>
+          <textarea id="html-paste" class="html-paste" placeholder="Paste your HTML here..." spellcheck="false"></textarea>
+        </div>
+        <div id="panel-upload" class="tab-panel" hidden>
+          <p class="paste-hint" style="padding-right:0.5rem;">Want your site to have images, or more than one page? Upload multiple files or an entire folder. Good for sharing output from tools like Claude Code or Codex.</p>
+          <div id="drop-zone" class="drop-zone">
+            <div class="drop-zone-content">
+              <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+              <p>Drag and drop your folder here</p>
+              <p class="drop-zone-alt">or</p>
+              <div class="pick-buttons">
+                <button id="btn-pick-folder" class="btn btn-secondary">Choose a folder</button>
+                <button id="btn-pick-files" class="btn btn-secondary">Choose individual files</button>
+              </div>
+              <input type="file" id="folder-input" multiple webkitdirectory hidden>
+              <input type="file" id="file-input" multiple hidden>
+            </div>
+          </div>
+          <div id="file-list" class="file-list" hidden>
+            <h3>Selected files:</h3>
+            <ul id="file-list-items"></ul>
+            <div class="file-actions">
+              <button id="btn-clear-files" class="btn btn-secondary btn-small">Clear and re-select</button>
+            </div>
+          </div>
+        </div>
+        <button id="btn-publish-cta" class="btn btn-primary btn-cta landing-cta">
+          <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          Connect to GitHub and publish
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <div class="social-proof">
+    <p>Join <strong>500k+ websites</strong> hosted for free on GitHub Pages (including this one!)</p>
+  </div>
+
+  <section id="how" class="how-it-works">
+    <h2 class="section-heading"><em>How it works</em></h2>
+    <div class="steps-grid">
+      <div class="step-card">
+        <img src="step-1.png" alt="Log cabin foundation" class="step-image">
+        <h3>Add your content</h3>
+        <p>Paste HTML directly or upload files. Works great with code from ChatGPT and other AI tools.</p>
+      </div>
+      <div class="step-card">
+        <img src="step-2.png" alt="In-progress log cabin" class="step-image">
+        <h3>Connect to GitHub</h3>
+        <p>Sign in to GitHub (or create a free account). It's used to store and host your site for free.</p>
+      </div>
+      <div class="step-card">
+        <img src="step-3.png" alt="Completed log cabin" class="step-image">
+        <h3>Share your website</h3>
+        <p>Your site gets a public URL instantly. Share it with anyone, anywhere in the world.</p>
+      </div>
+    </div>
+    <div style="text-align: center; margin-top: 40px; display: flex; gap: 12px; justify-content: center;">
+      <a href="/learn" class="btn btn-ghost btn-large">Learn more</a>
+      <button id="bottom-signin" class="btn btn-primary btn-large">Get started →</button>
+    </div>
+  </section>
+
+  <section class="about-section">
+    <h2 class="section-heading"><em>About weejur</em></h2>
+    <div class="about-grid">
+      <div class="about-card">
+        <h3>Why does this exist?</h3>
+        <p>Website builders charge $10–$30/month just to host a simple site. That's up to $300/year for something GitHub Pages and others offer for free. It should be easy for anyone to use these tools to make a website.</p>
+      </div>
+      <div class="about-card">
+        <h3>Who is this for?</h3>
+        <p>AI tools like ChatGPT and Claude make it easier than ever for regular people to create websites without expensive website builder platforms &mdash; but you still need a way to share them publicly.</p>
+      </div>
+      <div class="about-card">
+        <h3>Is it really free?</h3>
+        <p>Yes, GitHub Pages is completely free for public sites. (Other companies like Gitlab and Cloudflare have similar offerings, too.) A custom domain name costs a bit of money, but there's no upcharge to connect it to your site.</p>
+      </div>
+      <div class="about-card">
+        <h3>What can I host?</h3>
+        <p>Any "static" website — HTML, CSS, JavaScript, and images. You can't host a backend, but it's perfect for personal sites, portfolios, landing pages, or sharing something visual and interactive with others.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="landing-footer">
+    <div class="footer-inner">
+      <div class="footer-text">
+        <p>Made by <a href="https://npilk.com" target="_blank" rel="noopener">npilk</a></p>
+        <p><a href="https://github.com" target="_blank" rel="noopener">GitHub</a> and <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a> &copy; Microsoft</p>
+        <p>weejur is not affiliated with GitHub.</p>
+        <p>Questions? <a href="mailto:contact@weejur.com">Send us an email</a></p>
+      </div>
+      <div class="footer-image">
+        <img src="cabin-complete.png" alt="Animal construction workers smiling in front of a finished log cabin">
+      </div>
+    </div>
+  </footer>
 
   <script src="shared.js"></script>
   <script>
-    const steps = {
-      signin: $("step-signin"),
-      loading: $("step-loading"),
-      error: $("step-error"),
-    };
+    // If already signed in, go straight to the app
+    if (getToken() && getUsername()) {
+      window.location.href = "dashboard.html";
+    }
 
-    function showStep(name) {
-      Object.values(steps).forEach((s) => s.classList.remove("active"));
-      steps[name].classList.add("active");
+    const picker = initFilePicker({
+      onFilesReady(files) {
+        $("btn-publish-cta").hidden = !files;
+      },
+    });
+
+    // Show CTA when user types in the paste box
+    $("html-paste").addEventListener("input", () => {
+      $("btn-publish-cta").hidden = !$("html-paste").value.trim();
+    });
+
+    // Save files to IndexedDB and open login modal
+    $("btn-publish-cta").addEventListener("click", async () => {
+      const files = picker.getFiles() || picker.getPastedFiles();
+      if (!files) return;
+      await savePendingFiles(files);
+      openLoginModal();
+    });
+
+    // --- Login modal logic ---
+
+    function openLoginModal() {
+      $("login-overlay").hidden = false;
+    }
+
+    function closeLoginModal() {
+      $("login-overlay").hidden = true;
+    }
+
+    function showView(name) {
+      $("view-signin").hidden = name !== "signin";
+      $("view-loading").hidden = name !== "loading";
+      $("view-error").hidden = name !== "error";
     }
 
     function showError(msg) {
       $("error-message").textContent = msg;
-      showStep("error");
+      showView("error");
     }
 
-    $("btn-retry").addEventListener("click", () => {
-      showStep("signin");
+    // Open modal from nav / bottom CTA
+    $("nav-signin").addEventListener("click", openLoginModal);
+    $("bottom-signin").addEventListener("click", openLoginModal);
+
+    // Close modal on overlay click
+    $("login-overlay").addEventListener("click", (e) => {
+      if (e.target === $("login-overlay")) closeLoginModal();
     });
 
-    // OAuth: start sign-in
+    // Retry button
+    $("btn-retry").addEventListener("click", () => showView("signin"));
+
+    // Start OAuth
     $("btn-signin").addEventListener("click", () => {
       const redirectUri = window.location.origin + window.location.pathname;
       const scope = "public_repo delete_repo";
@@ -71,21 +233,19 @@
       window.location.href = url;
     });
 
-    // Main init
-    async function init() {
-      // Already have a token? Redirect immediately.
-      if (getToken() && getUsername()) {
-        await redirectAfterAuth();
+    // Handle OAuth callback
+    async function handleOAuthCallback() {
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code");
+      if (!code) {
+        // Auto-open modal if redirected here with ?login
+        if (params.has("login")) openLoginModal();
         return;
       }
 
-      // OAuth callback?
-      const params = new URLSearchParams(window.location.search);
-      const code = params.get("code");
-      if (!code) return; // Show sign-in button
-
       window.history.replaceState({}, "", window.location.pathname);
-      showStep("loading");
+      openLoginModal();
+      showView("loading");
 
       try {
         const res = await fetch(`${CONFIG.workerUrl}/auth`, {
@@ -102,7 +262,6 @@
         const data = await res.json();
         setToken(data.access_token);
 
-        // Fetch username
         const userRes = await fetch("https://api.github.com/user", {
           headers: { Authorization: `Bearer ${data.access_token}` },
         });
@@ -117,9 +276,13 @@
 
     async function redirectAfterAuth() {
       try {
+        if (await hasPendingFiles()) {
+          window.location.href = "new.html";
+          return;
+        }
         const username = getUsername();
         const data = await githubApi(
-          `/search/repositories?q=topic:shipsite+user:${username}`
+          `/search/repositories?q=topic:weejur+user:${username}`
         );
         if (data && data.total_count > 0) {
           window.location.href = "dashboard.html";
@@ -127,12 +290,11 @@
           window.location.href = "new.html";
         }
       } catch {
-        // If search fails, default to new
         window.location.href = "new.html";
       }
     }
 
-    init();
+    handleOAuthCallback();
   </script>
 </body>
 </html>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>weejur — Learn</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="nav-bar">
+    <a href="index.html" class="nav-logo">weejur</a>
+    <div class="nav-right">
+      <a href="index.html" class="btn btn-ghost btn-small">Home</a>
+    </div>
+  </nav>
+
+  <div class="learn-layout">
+    <aside class="learn-sidebar">
+      <nav class="learn-toc">
+        <a href="#basics" class="learn-toc-heading">Learn the basics</a>
+        <a href="#what-is-github" class="learn-toc-link active">GitHub</a>
+        <a href="#what-is-a-repo" class="learn-toc-link">Repos</a>
+        <a href="#what-is-git" class="learn-toc-link">Git</a>
+        <a href="#what-is-github-pages" class="learn-toc-link">GitHub Pages</a>
+        <a href="#troubleshooting" class="learn-toc-heading">Troubleshooting</a>
+        <a href="#site-not-up" class="learn-toc-link">Site not working</a>
+        <a href="#images-broken" class="learn-toc-link">Broken images</a>
+        <a href="#custom-domain" class="learn-toc-link">Custom domains</a>
+        <a href="#update-site" class="learn-toc-link">Updating content</a>
+      </nav>
+    </aside>
+
+    <main class="learn-content">
+
+      <!-- ============ BASICS ============ -->
+
+      <div class="learn-heading-row">
+        <h2 id="basics" class="learn-heading">Learn the basics</h2>
+        <img src="learn.png" alt="" class="learn-heading-img">
+      </div>
+
+      <section id="what-is-github" class="learn-section">
+        <h2>What is GitHub?</h2>
+        <p>Think of GitHub as a big, free online folder where people store their projects. It's mostly used by programmers, but anyone can use it.</p>
+        <p>When you use weejur, we put your website files into one of these folders on GitHub. That's it — GitHub keeps them safe and makes them available to the world.</p>
+        <p>You need a GitHub account to use weejur, but you don't need to know how GitHub works beyond signing in. weejur handles the rest.</p>
+      </section>
+
+      <section id="what-is-a-repo" class="learn-section">
+        <h2>What is a repository?</h2>
+        <p>A repository (or "repo") is just a project folder on GitHub. When you create a site with weejur, we create a repo for you with your website files inside it.</p>
+        <p>Each site you make gets its own repo. If you want to see your files, you can visit your repo on GitHub — you'll find a link on your <a href="dashboard.html">dashboard</a>.</p>
+        <p>You don't need to do anything with the repo directly. But it's good to know it exists, because that's where your website lives.</p>
+      </section>
+
+      <section id="what-is-git" class="learn-section">
+        <h2>What is Git?</h2>
+        <p>Git is a tool that keeps track of every change you make to your files — like a super-powered "undo" history. GitHub is a website built on top of Git.</p>
+        <p>You'll sometimes hear people talk about "commits" (saving a snapshot of your changes) or "pushing" (uploading changes). weejur does all of this for you behind the scenes.</p>
+        <p>You don't need to install Git or learn any commands to use weejur. We mention it here just so you know the word if you see it around.</p>
+      </section>
+
+      <section id="what-is-github-pages" class="learn-section">
+        <h2>What is GitHub Pages?</h2>
+        <p>GitHub Pages is a free feature from GitHub that turns a repository into a live website. Instead of just storing your files, GitHub also serves them to anyone who visits your URL.</p>
+        <p>When you publish a site with weejur, we flip this switch on for you. Your site gets a URL like <code>username.github.io/my-site</code> and it's live on the internet — for free, forever (as long as your GitHub account exists).</p>
+        <p>There are no ads, no storage limits for normal websites, and no monthly fees. GitHub Pages is genuinely free.</p>
+      </section>
+
+      <!-- ============ TROUBLESHOOTING ============ -->
+
+      <div class="learn-heading-row">
+        <h2 id="troubleshooting" class="learn-heading">Troubleshooting</h2>
+        <img src="troubleshooting.png" alt="" class="learn-heading-img">
+      </div>
+
+      <section id="site-not-up" class="learn-section">
+        <h2>Why isn't my site showing up?</h2>
+        <p><strong>Give it a minute.</strong> When you first publish, GitHub Pages needs a little time to set up. If you're seeing a 404 error, try waiting a minute or two and then refreshing the page.</p>
+        <p><strong>Check the URL.</strong> Make sure you're visiting the right address. You can find it on your <a href="dashboard.html">dashboard</a> — click the link there to make sure.</p>
+        <p><strong>Make sure you have an index.html.</strong> GitHub Pages looks for a file called <code>index.html</code> as your home page. If you uploaded files, make sure one of them is named <code>index.html</code> and re-publish.</p>
+        <p><strong>Still not working?</strong> Try deleting the site from your dashboard and creating it again. Sometimes a fresh start fixes things.</p>
+      </section>
+
+      <section id="images-broken" class="learn-section">
+        <h2>How do I get images to show up on my website?</h2>
+        <p><strong>Upload them with your site.</strong> If your HTML references images (like <code>&lt;img src="photo.jpg"&gt;</code>), you need to upload those image files alongside your HTML in order for them to show up on your website. Use the "Upload files" tab and select multiple files or an entire project folder.</p>
+        <p><strong>Check file names and extensions.</strong> File names are case-sensitive. If your HTML says <code>photo.jpg</code> but the file is called <code>Photo.jpg</code> or <code>photo.png</code>, it won't work. Make sure they match exactly.</p>
+        <p><strong>Using AI-generated HTML?</strong> If you pasted HTML from ChatGPT or Claude, the images in the code might be placeholder URLs that don't actually exist. You'll need to replace them with your own images, or use a service like <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a> for free stock photos.</p>
+      </section>
+
+      <section id="custom-domain" class="learn-section">
+        <h2>How do I use my own domain name?</h2>
+        <p>By default, your website will live at <code>username.github.io/site-name</code>. If you want a custom domain like <code>example.com</code>, it's easy to set up, but it takes a few extra steps (and the domain name will cost a bit of money). GitHub has a <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site" target="_blank" rel="noopener">detailed guide</a> you can follow, but here's the gist:</p>
+        <p><strong>1. Buy a domain.</strong> You'll need to purchase a domain name from a registrar like <a href="https://www.namecheap.com" target="_blank" rel="noopener">Namecheap</a>, <a href="https://www.cloudflare.com/products/registrar/" target="_blank" rel="noopener">Cloudflare</a>, or <a href="https://porkbun.com/" target="_blank" rel="noopener">Porkbun</a>. Prices are often around $10/year.</p>
+        <p><strong>2. Point it to GitHub.</strong> In your domain registrar's DNS settings, add a CNAME record pointing to <code>username.github.io</code>. Your registrar will have instructions, and <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#dns-records-for-your-custom-domain" target="_blank" rel="noopener">GitHub's guide</a> has more details as well.</p>
+        <p><strong>3. Tell GitHub.</strong> Go to your repository on GitHub, then Settings → Pages → Custom domain. Enter your domain name and save.</p>
+        
+      </section>
+
+      <section id="update-site" class="learn-section">
+        <h2>How do I update my site?</h2>
+        <p>Go to your <a href="dashboard.html">dashboard</a>, find the site you want to update, and click <strong>Update</strong>. Upload new files or paste updated HTML, then hit <strong>Publish</strong> again. Your changes will go live within a minute or two at the same URL.</p>
+        <p><strong>Tip:</strong> If you're making small changes, you can also edit files directly on GitHub. Click the repo link on your dashboard, find the file, and click the pencil icon to edit it right in your browser.</p>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Highlight active TOC link on scroll
+    const sections = document.querySelectorAll('.learn-section');
+    const tocLinks = document.querySelectorAll('.learn-toc-link');
+
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(link => link.classList.remove('active'));
+          const active = document.querySelector(`.learn-toc-link[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      }
+    }, { rootMargin: '-140px 0px -60% 0px' });
+
+    sections.forEach(section => observer.observe(section));
+
+    // Smooth scroll on all TOC clicks (links and headings)
+    document.querySelectorAll('.learn-toc-link, .learn-toc-heading').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.replaceState(null, '', link.getAttribute('href'));
+        }
+      });
+    });
+  </script>
+
+  <footer class="landing-footer">
+    <div class="footer-inner">
+      <div class="footer-text">
+        <p>Made by <a href="https://npilk.com" target="_blank" rel="noopener">npilk</a></p>
+        <p>weejur is not affiliated with GitHub</p>
+        <p><a href="https://github.com" target="_blank" rel="noopener">GitHub</a> and <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a> &copy; Microsoft</p>
+      </div>
+      <div class="footer-image">
+        <img src="cabin-complete.png" alt="Your site is live">
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

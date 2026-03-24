@@ -1,5 +1,5 @@
 // =============================================================================
-// dashboard.js — List, edit, delete ShipSite repos
+// dashboard.js — List, update, delete weejur repos
 // =============================================================================
 
 if (!requireAuth()) throw new Error("Not authenticated");
@@ -15,7 +15,7 @@ $("btn-signout").addEventListener("click", signOut);
 async function loadSites() {
   try {
     const data = await githubApi(
-      `/search/repositories?q=topic:shipsite+user:${username}&sort=updated&order=desc`
+      `/search/repositories?q=topic:weejur+user:${username}&sort=updated&order=desc`
     );
     const repos = data.items || [];
 
@@ -28,6 +28,7 @@ async function loadSites() {
 
     const list = $("site-list");
     list.hidden = false;
+    $("btn-new-site").hidden = false;
 
     for (const repo of repos) {
       const liveUrl = `https://${username}.github.io/${repo.name}/`;
@@ -36,17 +37,32 @@ async function loadSites() {
       card.id = `card-${repo.name}`;
       card.innerHTML = `
         <div class="site-card-info">
-          <h3 class="site-card-name">${repo.name}</h3>
+          <h3 class="site-card-name">${repo.name}
+            <button class="site-card-copy" data-url="${liveUrl}" title="Copy link">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            </button>
+          </h3>
           <a href="${liveUrl}" class="site-card-url" target="_blank" rel="noopener">${liveUrl}</a>
           <a href="https://github.com/${username}/${repo.name}" class="site-card-repo" target="_blank" rel="noopener">View repo on GitHub</a>
         </div>
         <div class="site-card-actions">
-          <a href="new.html?edit=${encodeURIComponent(repo.name)}" class="btn btn-secondary btn-small">Edit</a>
+          <a href="new.html?update=${encodeURIComponent(repo.name)}" class="btn btn-secondary btn-small">Update</a>
           <button class="btn btn-danger btn-small" data-repo="${repo.name}">Delete</button>
         </div>
       `;
       list.appendChild(card);
     }
+
+    // Attach copy handlers
+    list.querySelectorAll(".site-card-copy").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        await navigator.clipboard.writeText(btn.dataset.url);
+        const svg = btn.querySelector("svg");
+        const original = svg.innerHTML;
+        svg.innerHTML = '<polyline points="20 6 9 17 4 12" />';
+        setTimeout(() => { svg.innerHTML = original; }, 1500);
+      });
+    });
 
     // Attach delete handlers
     list.querySelectorAll("[data-repo]").forEach((btn) => {
@@ -110,6 +126,7 @@ $("btn-delete-confirm").addEventListener("click", async () => {
     // If no cards left, show empty state
     if ($("site-list").children.length === 0) {
       $("site-list").hidden = true;
+      $("btn-new-site").hidden = true;
       $("empty-state").hidden = false;
     }
   } catch (err) {

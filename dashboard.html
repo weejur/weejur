@@ -3,21 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ShipSite — My Sites</title>
+  <title>weejur — My websites</title>
+  <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <nav class="nav-bar">
-    <a href="index.html" class="nav-logo">ShipSite</a>
+    <a href="index.html" class="nav-logo">weejur</a>
     <div class="nav-right">
       <span id="nav-username"></span>
-      <a href="new.html" class="btn btn-primary btn-small">New site</a>
-      <button id="btn-signout" class="btn btn-secondary btn-small">Sign out</button>
+      <button id="btn-signout" class="btn btn-ghost btn-small">Sign out</button>
     </div>
   </nav>
 
   <div class="container">
-    <h2 class="page-title">My Sites</h2>
+    <div class="page-header">
+      <h2 class="page-title">My websites</h2>
+      <a id="btn-new-site" href="new.html" class="btn btn-primary btn-large" style="padding:14px 22px;" hidden>New site&ensp;+</a>
+    </div>
 
     <div id="loading" class="loading-spinner">Loading your sites...</div>
 
@@ -37,11 +40,25 @@
       <p>Type the repository name to confirm:</p>
       <input type="text" id="delete-confirm-input" class="modal-input" autocomplete="off" spellcheck="false">
       <div class="modal-actions">
-        <button id="btn-delete-cancel" class="btn btn-secondary">Cancel</button>
+        <button id="btn-delete-cancel" class="btn btn-secondary btn-muted">Cancel</button>
         <button id="btn-delete-confirm" class="btn btn-danger" disabled>Delete this site</button>
       </div>
     </div>
   </div>
+
+  <footer class="landing-footer">
+    <div class="footer-inner">
+      <div class="footer-text">
+        <p>Made by <a href="https://npilk.com" target="_blank" rel="noopener">npilk</a></p>
+        <p><a href="https://github.com" target="_blank" rel="noopener">GitHub</a> and <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a> &copy; Microsoft</p>
+        <p>weejur is not affiliated with GitHub.</p>
+        <p>Questions? <a href="mailto:contact@weejur.com">Send us an email</a></p>
+      </div>
+      <div class="footer-image">
+        <img src="cabin-complete.png" alt="Animal construction workers smiling in front of a finished log cabin">
+      </div>
+    </div>
+  </footer>
 
   <script src="shared.js"></script>
   <script src="dashboard.js"></script>

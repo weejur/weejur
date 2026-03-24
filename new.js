@@ -1,5 +1,5 @@
 // =============================================================================
-// new.js — Create or edit a site
+// new.js — Create or update a site
 // =============================================================================
 
 if (!requireAuth()) throw new Error("Not authenticated");
@@ -14,16 +14,15 @@ $("btn-signout").addEventListener("click", signOut);
 
 let selectedFiles = [];
 const params = new URLSearchParams(window.location.search);
-const editRepo = params.get("edit");
-const isEditMode = !!editRepo;
+const updateRepo = params.get("update");
+const isUpdateMode = !!updateRepo;
 
 // =============================================================================
-// Edit mode setup
+// Update mode setup
 // =============================================================================
 
-if (isEditMode) {
-  $("files-step-label").textContent = "Step 1";
-  $("files-heading").textContent = `Update ${editRepo}`;
+if (isUpdateMode) {
+  $("files-heading").textContent = 'Updating "${updateRepo}"';
   $("publishing-heading").textContent = "Updating your site...";
   $("done-heading").textContent = "Your site has been updated!";
 }
@@ -46,170 +45,24 @@ function showStep(stepName) {
 }
 
 // =============================================================================
-// Tabs (Upload vs Paste)
+// File picker (shared logic from shared.js)
 // =============================================================================
 
-document.querySelectorAll(".tab").forEach((tab) => {
-  tab.addEventListener("click", () => {
-    document.querySelectorAll(".tab").forEach((t) => t.classList.remove("active"));
-    tab.classList.add("active");
-    const target = tab.dataset.tab;
-    $("panel-upload").hidden = target !== "upload";
-    $("panel-paste").hidden = target !== "paste";
-  });
+const picker = initFilePicker({
+  onFilesReady(files) {
+    // No special action needed here — Next buttons handle it
+  },
 });
 
 // =============================================================================
-// File Selection
+// File selection → Next
 // =============================================================================
-
-const dropZone = $("drop-zone");
-const fileInput = $("file-input");
-const folderInput = $("folder-input");
-
-$("btn-pick-folder").addEventListener("click", (e) => {
-  e.stopPropagation();
-  folderInput.click();
-});
-
-$("btn-pick-files").addEventListener("click", (e) => {
-  e.stopPropagation();
-  fileInput.click();
-});
-
-dropZone.addEventListener("dragover", (e) => {
-  e.preventDefault();
-  dropZone.classList.add("drag-over");
-});
-
-dropZone.addEventListener("dragleave", () => {
-  dropZone.classList.remove("drag-over");
-});
-
-dropZone.addEventListener("drop", async (e) => {
-  e.preventDefault();
-  dropZone.classList.remove("drag-over");
-
-  const items = e.dataTransfer.items;
-  if (!items) return;
-
-  selectedFiles = [];
-  const promises = [];
-
-  for (const item of items) {
-    const entry = item.webkitGetAsEntry?.();
-    if (entry) {
-      promises.push(readEntry(entry, ""));
-    }
-  }
-
-  await Promise.all(promises);
-
-  // If a single folder was dropped, strip the folder name from all paths
-  if (selectedFiles.length > 0) {
-    const paths = selectedFiles.map((f) => f.path);
-    const commonPrefix = findCommonPrefix(paths);
-    if (commonPrefix) {
-      for (const file of selectedFiles) {
-        file.path = file.path.substring(commonPrefix.length);
-      }
-    }
-  }
-
-  displayFiles();
-});
-
-async function readEntry(entry, basePath) {
-  if (entry.isFile) {
-    const file = await new Promise((resolve) => entry.file(resolve));
-    const content = await file.arrayBuffer();
-    const path = basePath ? `${basePath}/${entry.name}` : entry.name;
-    selectedFiles.push({ path, content });
-  } else if (entry.isDirectory) {
-    const dirPath = basePath ? `${basePath}/${entry.name}` : entry.name;
-    const reader = entry.createReader();
-    const entries = await new Promise((resolve) =>
-      reader.readEntries(resolve)
-    );
-    for (const child of entries) {
-      await readEntry(child, dirPath);
-    }
-  }
-}
-
-folderInput.addEventListener("change", async () => {
-  selectedFiles = [];
-  const files = folderInput.files;
-
-  const paths = Array.from(files).map((f) => f.webkitRelativePath || f.name);
-  const commonPrefix = findCommonPrefix(paths);
-
-  for (const file of files) {
-    const content = await file.arrayBuffer();
-    let path = file.webkitRelativePath || file.name;
-    if (commonPrefix) {
-      path = path.substring(commonPrefix.length);
-    }
-    selectedFiles.push({ path, content });
-  }
-
-  displayFiles();
-});
-
-fileInput.addEventListener("change", async () => {
-  selectedFiles = [];
-
-  for (const file of fileInput.files) {
-    const content = await file.arrayBuffer();
-    selectedFiles.push({ path: file.name, content });
-  }
-
-  displayFiles();
-});
-
-function displayFiles() {
-  if (selectedFiles.length === 0) return;
-
-  const list = $("file-list-items");
-  list.innerHTML = "";
-
-  const sorted = [...selectedFiles].sort((a, b) =>
-    a.path.localeCompare(b.path)
-  );
-
-  for (const file of sorted) {
-    const li = document.createElement("li");
-    li.textContent = file.path;
-    list.appendChild(li);
-  }
-
-  dropZone.hidden = true;
-  $("file-list").hidden = false;
-
-  const hasIndex = selectedFiles.some(
-    (f) => f.path === "index.html" || f.path.endsWith("/index.html")
-  );
-  if (!hasIndex) {
-    const warning = document.createElement("li");
-    warning.style.color = "#9a6700";
-    warning.style.fontFamily = "inherit";
-    warning.textContent =
-      "⚠ No index.html found. Add a file called index.html to be your site's home page.";
-    list.prepend(warning);
-  }
-}
-
-$("btn-clear-files").addEventListener("click", () => {
-  selectedFiles = [];
-  fileInput.value = "";
-  folderInput.value = "";
-  $("file-list").hidden = true;
-  dropZone.hidden = false;
-});
 
 $("btn-files-next").addEventListener("click", () => {
-  if (selectedFiles.length === 0) return;
-  if (isEditMode) {
+  const files = picker.getFiles();
+  if (!files || files.length === 0) return;
+  selectedFiles = files;
+  if (isUpdateMode) {
     publish();
   } else {
     showStep("name");
@@ -219,17 +72,14 @@ $("btn-files-next").addEventListener("click", () => {
 });
 
 // =============================================================================
-// Paste HTML
+// Paste HTML → Next
 // =============================================================================
 
 $("btn-paste-next").addEventListener("click", () => {
-  const html = $("html-paste").value.trim();
-  if (!html) return;
-
-  const encoder = new TextEncoder();
-  selectedFiles = [{ path: "index.html", content: encoder.encode(html).buffer }];
-
-  if (isEditMode) {
+  const files = picker.getPastedFiles();
+  if (!files) return;
+  selectedFiles = files;
+  if (isUpdateMode) {
     publish();
   } else {
     showStep("name");
@@ -237,6 +87,24 @@ $("btn-paste-next").addEventListener("click", () => {
     updateUrlPreview();
   }
 });
+
+// =============================================================================
+// Pending files from landing page (via IndexedDB)
+// =============================================================================
+
+async function checkPendingFiles() {
+  if (isUpdateMode) return;
+  const pending = await loadPendingFiles();
+  if (pending && pending.length > 0) {
+    selectedFiles = pending;
+    picker.setFiles(pending);
+    showStep("name");
+    $("site-name").focus();
+    updateUrlPreview();
+  }
+}
+
+checkPendingFiles();
 
 // =============================================================================
 // Site Naming
@@ -270,8 +138,8 @@ $("btn-publish").addEventListener("click", () => {
 });
 
 async function publish(repoName) {
-  if (isEditMode) {
-    await publishEdit();
+  if (isUpdateMode) {
+    await publishUpdate();
   } else {
     await publishCreate(repoName);
   }
@@ -286,21 +154,19 @@ async function publishCreate(repoName) {
       method: "POST",
       body: JSON.stringify({
         name: repoName,
-        description: "Website published with ShipSite",
+        description: "Website published with weejur",
         auto_init: false,
         private: false,
       }),
     });
 
-    // Topics must be set via a separate API call
     await githubApi(`/repos/${repo.full_name}/topics`, {
       method: "PUT",
-      body: JSON.stringify({ names: ["shipsite"] }),
+      body: JSON.stringify({ names: ["weejur"] }),
     });
     setProgress("ps-repo", "done");
 
     setProgress("ps-upload", "active");
-    // Upload files sequentially via Contents API (works on empty repos)
     for (const file of selectedFiles) {
       const base64 = arrayBufferToBase64(file.content);
       await githubApi(`/repos/${repo.full_name}/contents/${file.path}`, {
@@ -334,15 +200,14 @@ async function publishCreate(repoName) {
   }
 }
 
-async function publishEdit() {
-  const repoFullName = `${username}/${editRepo}`;
+async function publishUpdate() {
+  const repoFullName = `${username}/${updateRepo}`;
 
   showStep("publishing");
   $("ps-repo").textContent = "Preparing update...";
   setProgress("ps-repo", "active");
 
   try {
-    // 1. Get HEAD SHA
     let headRef;
     try {
       headRef = await githubApi(`/repos/${repoFullName}/git/ref/heads/main`);
@@ -356,7 +221,6 @@ async function publishEdit() {
     const headSha = headRef.object.sha;
     setProgress("ps-repo", "done");
 
-    // 2. Upload blobs in parallel
     setProgress("ps-upload", "active");
     $("ps-upload").textContent = "Uploading your files...";
     const blobPromises = selectedFiles.map(async (file) => {
@@ -372,30 +236,26 @@ async function publishEdit() {
     });
     const treeItems = await Promise.all(blobPromises);
 
-    // 3. Create tree (no base_tree = full replacement)
     const tree = await githubApi(`/repos/${repoFullName}/git/trees`, {
       method: "POST",
       body: JSON.stringify({ tree: treeItems }),
     });
 
-    // 4. Create commit
     const commit = await githubApi(`/repos/${repoFullName}/git/commits`, {
       method: "POST",
       body: JSON.stringify({
-        message: "Update site via ShipSite",
+        message: "Update site via weejur",
         tree: tree.sha,
         parents: [headSha],
       }),
     });
 
-    // 5. Update ref
     await githubApi(`/repos/${repoFullName}/git/refs/heads/main`, {
       method: "PATCH",
       body: JSON.stringify({ sha: commit.sha }),
     });
     setProgress("ps-upload", "done");
 
-    // 6. Ensure Pages is still enabled
     setProgress("ps-enable", "active");
     $("ps-enable").textContent = "Checking your website...";
     try {
@@ -410,7 +270,7 @@ async function publishEdit() {
     }
     setProgress("ps-enable", "done");
 
-    const siteUrl = `https://${username}.github.io/${editRepo}/`;
+    const siteUrl = `https://${username}.github.io/${updateRepo}/`;
     $("site-url").href = siteUrl;
     $("site-url").textContent = siteUrl;
     showStep("done");
@@ -423,9 +283,8 @@ async function publishEdit() {
 }
 
 async function pollForSite(url, repoFullName) {
-  const publishedAt = new Date().toISOString();
-  const timeout = 120000; // 2 minutes
-  const interval = 5000; // check every 5 seconds
+  const timeout = 120000;
+  const interval = 4000;
   const startTime = Date.now();
 
   $("site-status-checking").hidden = false;
@@ -436,35 +295,25 @@ async function pollForSite(url, repoFullName) {
 
   while (Date.now() - startTime < timeout) {
     try {
-      // Check Pages builds for one that completed after we published
-      const builds = await githubApi(
-        `/repos/${repoFullName}/pages/builds`
+      // Check the actual URL via the worker (bypasses CORS)
+      const res = await fetch(
+        `${CONFIG.workerUrl}/check-site?url=${encodeURIComponent(url)}`,
       );
-      const recentBuild = builds.find(
-        (b) => new Date(b.created_at) >= new Date(publishedAt)
-      );
-      if (recentBuild && recentBuild.status === "built") {
+      const data = await res.json();
+      if (data.status >= 200 && data.status < 400) {
         $("site-status-checking").hidden = true;
         $("site-status-live").hidden = false;
-        $("done-heading").textContent = isEditMode
+        $("done-heading").textContent = isUpdateMode
           ? "Your site has been updated!"
           : "Your site is live!";
         return;
       }
-      if (recentBuild && recentBuild.status === "errored") {
-        $("site-status-checking").hidden = true;
-        $("site-status-slow").hidden = false;
-        $("site-status-slow").querySelector("p").textContent =
-          "The deployment encountered an error. Try visiting the link below, or check the repository on GitHub for details.";
-        return;
-      }
     } catch {
-      // API error, keep polling
+      // Worker unavailable, keep polling
     }
     await new Promise((resolve) => setTimeout(resolve, interval));
   }
 
-  // Timeout reached
   $("site-status-checking").hidden = true;
   $("site-status-slow").hidden = false;
 }
@@ -509,10 +358,7 @@ function showError(message) {
 $("btn-retry").addEventListener("click", () => {
   steps.error.classList.remove("active");
   selectedFiles = [];
-  fileInput.value = "";
-  folderInput.value = "";
-  $("file-list").hidden = true;
-  dropZone.hidden = false;
+  picker.clear();
   document
     .querySelectorAll(".progress-step")
     .forEach((el) => el.classList.remove("active", "done", "error"));
