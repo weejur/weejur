@@ -2,21 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://stats.npilk.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.github.com https://auth.weejur.com; img-src 'self' data:;">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>weejur — Share a website for free</title>
-  <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="stylesheet" href="style.css">
+  <title>weejur — Publish websites for free with GitHub Pages</title>
+  <meta name="description" content="Turn your HTML into a live website in seconds. No hosting to configure, no servers to manage, no monthly fees. Powered by GitHub Pages.">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://weejur.com/">
+  <meta property="og:title" content="Publish your website for free">
+  <meta property="og:description" content="Turn your HTML into a live website in seconds. No hosting to configure, no servers to manage, no monthly fees. Powered by GitHub Pages.">
+  <meta property="og:image" content="https://weejur.com/assets/weejur.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="675">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Publish your website for free">
+  <meta name="twitter:description" content="Turn your HTML into a live website in seconds. No hosting to configure, no servers to manage, no monthly fees. Powered by GitHub Pages.">
+  <meta name="twitter:image" content="https://weejur.com/assets/weejur.png">
+
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- tracking -->
+  <script defer src="https://stats.npilk.com/script.js" data-website-id="b946017f-b414-4cab-8166-3e4735fc5c7e"></script>
+
 </head>
 <body class="landing">
   <nav class="nav-bar">
-    <a href="index.html" class="nav-logo">weejur</a>
+    <a href="/" class="nav-logo">weejur</a>
     <div class="nav-right"></div>
   </nav>
 
   <!-- Login modal -->
   <div id="login-overlay" class="modal-overlay" hidden>
     <div class="login-card">
-      <div class="login-wordmark"><img src="login.png" style="max-width:100px;"></div>
+      <div class="login-wordmark"><img src="assets/login.png" style="max-width:100px;"></div>
 
       <!-- Default: sign-in view -->
       <div id="view-signin">
@@ -51,7 +73,7 @@
         <p class="hero-sub">Turn your HTML into a live, public website in seconds with GitHub Pages. No hosting to configure, no servers to manage, no monthly subscription.</p>
       </div>
       <div class="hero-right">
-        <img src="cabin-construction.png" alt="Pixel art of animal construction workers building a log cabin">
+        <img src="assets/cabin-construction.png" alt="Pixel art of animal construction workers building a log cabin">
       </div>
     </div>
     <div class="hero-picker">
@@ -103,23 +125,23 @@
     <h2 class="section-heading"><em>How it works</em></h2>
     <div class="steps-grid">
       <div class="step-card">
-        <img src="step-1.png" alt="Log cabin foundation" class="step-image">
+        <img src="assets/step-1.png" alt="Log cabin foundation" class="step-image">
         <h3>Add your content</h3>
         <p>Paste HTML directly or upload files. Works great with code from ChatGPT and other AI tools.</p>
       </div>
       <div class="step-card">
-        <img src="step-2.png" alt="In-progress log cabin" class="step-image">
+        <img src="assets/step-2.png" alt="In-progress log cabin" class="step-image">
         <h3>Connect to GitHub</h3>
         <p>Sign in to GitHub (or create a free account). It's used to store and host your site for free.</p>
       </div>
       <div class="step-card">
-        <img src="step-3.png" alt="Completed log cabin" class="step-image">
+        <img src="assets/step-3.png" alt="Completed log cabin" class="step-image">
         <h3>Share your website</h3>
         <p>Your site gets a public URL in seconds. Share it with anyone around the world.</p>
       </div>
     </div>
     <div style="text-align: center; margin-top: 40px; display: flex; gap: 12px; justify-content: center;">
-      <a href="/faq.html" class="btn btn-ghost btn-large">Learn more</a>
+      <a href="/faq" class="btn btn-ghost btn-large">Learn more</a>
       <button id="bottom-signin" class="btn btn-primary btn-large">Get started<span id="get-started-arrow"> →</span></button>
     </div>
   </section>
@@ -152,16 +174,16 @@
         <p>Made by <a href="https://npilk.com" target="_blank" rel="noopener">npilk</a></p>
         <p><a href="https://github.com" target="_blank" rel="noopener">GitHub</a> and GitHub Pages &copy; Microsoft</p>
         <p>weejur is not affiliated with GitHub.</p>
-        <p>Need help? <a href="/faq.html#troubleshooting">Troubleshooting</a></p>
+        <p>Need help? <a href="/faq#troubleshooting">Troubleshooting</a></p>
         <p>Questions? <a href="mailto:contact@weejur.com">Send us an email</a></p>
       </div>
       <div class="footer-image">
-        <img src="cabin-complete.png" alt="Animal construction workers smiling in front of a finished log cabin">
+        <img src="assets/cabin-complete.png" alt="Animal construction workers smiling in front of a finished log cabin">
       </div>
     </div>
   </footer>
 
-  <script src="shared.js"></script>
+  <script src="js/shared.js"></script>
   <script>
     const picker = initFilePicker({
       onFilesReady(files) {
@@ -284,12 +306,12 @@
     async function redirectAfterAuth() {
       try {
         if (await hasPendingFiles()) {
-          window.location.href = "new.html";
+          window.location.href = "/new";
           return;
         }
-        window.location.href = "dashboard.html";
+        window.location.href = "/dashboard";
       } catch {
-        window.location.href = "dashboard.html";
+        window.location.href = "/dashboard";
       }
     }
 

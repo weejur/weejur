@@ -36,7 +36,7 @@ function clearToken() {
 
 function requireAuth() {
   if (!getToken()) {
-    window.location.href = "index.html?login";
+    window.location.href = "/?login";
     return false;
   }
   return true;
@@ -44,7 +44,7 @@ function requireAuth() {
 
 function signOut() {
   clearToken();
-  window.location.href = "index.html";
+  window.location.href = "/";
 }
 
 function generateOAuthState() {
@@ -77,7 +77,7 @@ async function githubApi(endpoint, options = {}) {
 
   if (res.status === 401) {
     clearToken();
-    window.location.href = "index.html?login";
+    window.location.href = "/?login";
     return;
   }
 
@@ -371,7 +371,7 @@ function initNavbar({ onSignIn } = {}) {
 
   // Learn link (always shown)
   const learnLink = document.createElement("a");
-  learnLink.href = "/faq.html";
+  learnLink.href = "/faq";
   learnLink.className = "btn btn-ghost btn-small";
   learnLink.textContent = "FAQ";
   navRight.appendChild(learnLink);
@@ -379,7 +379,7 @@ function initNavbar({ onSignIn } = {}) {
   if (token && username) {
     // Your websites
     const sitesLink = document.createElement("a");
-    sitesLink.href = "/dashboard.html";
+    sitesLink.href = "/dashboard";
     sitesLink.className = "btn btn-ghost btn-small";
     sitesLink.textContent = "Your websites";
     navRight.appendChild(sitesLink);
@@ -439,7 +439,7 @@ function initNavbar({ onSignIn } = {}) {
       signInBtn.addEventListener("click", onSignIn);
     } else {
       signInBtn.addEventListener("click", () => {
-        window.location.href = "index.html?login";
+        window.location.href = "/?login";
       });
     }
   }

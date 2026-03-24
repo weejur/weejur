@@ -190,7 +190,7 @@ async function publishCreate(repoName) {
     });
     setProgress("ps-enable", "done");
 
-    window.location.href = `published.html?repo=${encodeURIComponent(repoName)}`;
+    window.location.href = `/published?repo=${encodeURIComponent(repoName)}`;
   } catch (err) {
     const activeStep = document.querySelector(".progress-step.active");
     if (activeStep) activeStep.classList.replace("active", "error");
@@ -268,7 +268,7 @@ async function publishUpdate() {
     }
     setProgress("ps-enable", "done");
 
-    window.location.href = `published.html?repo=${encodeURIComponent(updateRepo)}&updated=1`;
+    window.location.href = `/published?repo=${encodeURIComponent(updateRepo)}&updated=1`;
   } catch (err) {
     const activeStep = document.querySelector(".progress-step.active");
     if (activeStep) activeStep.classList.replace("active", "error");

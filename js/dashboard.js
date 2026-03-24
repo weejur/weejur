@@ -60,7 +60,7 @@ async function loadSites() {
       urlLink.href = liveUrl;
       urlLink.textContent = liveUrl;
       card.querySelector(".site-card-repo").href = `https://github.com/${encodeURIComponent(username)}/${encodeURIComponent(repo.name)}`;
-      card.querySelector(".btn-secondary").href = `new.html?update=${encodeURIComponent(repo.name)}`;
+      card.querySelector(".btn-secondary").href = `/new?update=${encodeURIComponent(repo.name)}`;
       card.querySelector(".btn-danger").dataset.repo = repo.name;
       list.appendChild(card);
     }

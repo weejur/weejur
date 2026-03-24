@@ -16,7 +16,7 @@ const repo = params.get("repo");
 const updated = params.get("updated") === "1";
 
 if (!repo) {
-  window.location.href = "dashboard.html";
+  window.location.href = "/dashboard";
   throw new Error("No repo specified");
 }
 
@@ -96,8 +96,8 @@ $("btn-copy-url").addEventListener("click", async () => {
   }
 });
 
-$("btn-update-site").href = `new.html?repo=${encodeURIComponent(repo)}`;
+$("btn-update-site").href = `/new?repo=${encodeURIComponent(repo)}`;
 
 $("btn-new-site").addEventListener("click", () => {
-  window.location.href = "new.html";
+  window.location.href = "/new";
 });

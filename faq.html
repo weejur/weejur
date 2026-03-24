@@ -2,14 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://stats.npilk.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.github.com https://auth.weejur.com; img-src 'self' data:;">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>weejur — Frequently asked questions</title>
-  <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="stylesheet" href="style.css">
+  <meta property="og:image" content="https://weejur.com/assets/weejur.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://weejur.com/assets/weejur.png">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- tracking -->
+  <script defer src="https://stats.npilk.com/script.js" data-website-id="b946017f-b414-4cab-8166-3e4735fc5c7e"></script>
+  
 </head>
 <body>
   <nav class="nav-bar">
-    <a href="index.html" class="nav-logo">weejur</a>
+    <a href="/" class="nav-logo">weejur</a>
     <div class="nav-right"></div>
   </nav>
 
@@ -39,7 +47,7 @@
 
       <div class="learn-heading-row">
         <h2 id="basics" class="learn-heading">Learn the basics</h2>
-        <img src="learn.png" alt="" class="learn-heading-img">
+        <img src="assets/learn.png" alt="" class="learn-heading-img">
       </div>
 
       <section id="what-is-github" class="learn-section">
@@ -51,7 +59,7 @@
       <section id="what-is-a-repo" class="learn-section">
         <h2>What is a repository ("repo")?</h2>
         <p>A Git repository (or "repo") is what project folders are called on GitHub. When you create a site with weejur, a repo is automatically created for you with your website files inside it. Git repos have some extra features programmers use for things like version control.</p>
-        <p>Each site you make gets its own repo. If you want to see your files, you can visit your repo on GitHub — you'll find a link on your <a href="dashboard.html">dashboard</a>.</p>
+        <p>Each site you make gets its own repo. If you want to see your files, you can visit your repo on GitHub — you'll find a link on your <a href="/dashboard">dashboard</a>.</p>
       </section>
 
       <section id="what-is-git" class="learn-section">
@@ -79,14 +87,14 @@
 
       <div class="learn-heading-row">
         <h2 id="troubleshooting" class="learn-heading">Troubleshooting</h2>
-        <img src="troubleshooting.png" alt="" class="learn-heading-img">
+        <img src="assets/troubleshooting.png" alt="" class="learn-heading-img">
       </div>
 
       <section id="site-not-up" class="learn-section">
         <h2>Why isn't my site showing up?</h2>
         <ul>
           <li><strong>Give it a minute.</strong> When you first publish, GitHub Pages needs a little time to set up. If you're seeing a 404 error, try waiting a minute or two and then refreshing the page.</li>
-          <li><strong>Check the URL.</strong> Make sure you're visiting the right address. You can find it on your <a href="dashboard.html">dashboard</a> — click the link there to make sure.</li>
+          <li><strong>Check the URL.</strong> Make sure you're visiting the right address. You can find it on your <a href="/dashboard">dashboard</a> — click the link there to make sure.</li>
           <li><strong>Make sure you have an index.html.</strong> GitHub Pages looks for a file called <code>index.html</code> as your home page. If you uploaded files, make sure one of them is named <code>index.html</code> and re-publish. Or, if you have a file called <code>example.html</code>, try visiting <code>username.github.io/yoursite/example.html</code> instead.</li>
           <li><strong>Still not working?</strong> Try deleting the site from your dashboard and creating it again. Sometimes a fresh start fixes things.</li>
         </ul>
@@ -112,7 +120,7 @@
 
       <section id="update-site" class="learn-section">
         <h2>How do I update my website?</h2>
-        <p>Go to <a href="dashboard.html">Your websites</a>, find the site you want to update, and click <strong>Update</strong>. Upload new files or paste updated HTML, then click <strong>Publish</strong> again. Your changes will go live within a minute or two at the same URL.</p>
+        <p>Go to <a href="/dashboard">Your websites</a>, find the site you want to update, and click <strong>Update</strong>. Upload new files or paste updated HTML, then click <strong>Publish</strong> again. Your changes will go live within a minute or two at the same URL.</p>
         <p><strong>Tip:</strong> If you're making small changes, you can also edit files directly on GitHub. Click the repo link on your dashboard, find the file, and click the pencil icon to edit it right in your browser.</p>
       </section>
 
@@ -122,7 +130,7 @@
         <ul>
           <li><strong>Buy a domain.</strong> You'll need to purchase a domain name from a registrar like <a href="https://www.namecheap.com" target="_blank" rel="noopener">Namecheap</a>, <a href="https://www.cloudflare.com/products/registrar/" target="_blank" rel="noopener">Cloudflare</a>, or <a href="https://porkbun.com/" target="_blank" rel="noopener">Porkbun</a>. Prices are often around $10/year.</li>
           <li><strong>Point it to GitHub.</strong> In your domain registrar's DNS settings, add a CNAME record pointing to <code>yourusername.github.io</code>. Your registrar will have instructions, and <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#dns-records-for-your-custom-domain" target="_blank" rel="noopener">GitHub's guide</a> has more details as well.</li>
-          <li><strong>Update GitHub.</strong> Go to your repo on GitHub, then Settings → Pages → Custom domain. Enter your domain name and save. (You can find links to your repos on <a href="dashboard.html">Your websites</a>.)</li>
+          <li><strong>Update GitHub.</strong> Go to your repo on GitHub, then Settings → Pages → Custom domain. Enter your domain name and save. (You can find links to your repos on <a href="/dashboard">Your websites</a>.)</li>
         </ul>
         
       </section>
@@ -131,7 +139,7 @@
     </main>
   </div>
 
-  <script src="shared.js"></script>
+  <script src="js/shared.js"></script>
   <script>
     initNavbar();
 
@@ -170,11 +178,11 @@
         <p>Made by <a href="https://npilk.com" target="_blank" rel="noopener">npilk</a></p>
         <p><a href="https://github.com" target="_blank" rel="noopener">GitHub</a> and GitHub Pages &copy; Microsoft</p>
         <p>weejur is not affiliated with GitHub.</p>
-        <p>Need help? <a href="/faq.html#troubleshooting">Troubleshooting</a></p>
+        <p>Need help? <a href="/faq#troubleshooting">Troubleshooting</a></p>
         <p>Questions? <a href="mailto:contact@weejur.com">Send us an email</a></p>
       </div>
       <div class="footer-image">
-        <img src="cabin-complete.png" alt="Your site is live">
+        <img src="assets/cabin-complete.png" alt="Your site is live">
       </div>
     </div>
   </footer>

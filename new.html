@@ -2,14 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://stats.npilk.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.github.com https://auth.weejur.com; img-src 'self' data:;">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>weejur — New Site</title>
-  <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="stylesheet" href="style.css">
+  <title>weejur — Publish a new site</title>
+  <meta property="og:image" content="https://weejur.com/assets/weejur.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://weejur.com/assets/weejur.png">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- tracking -->
+  <script defer src="https://stats.npilk.com/script.js" data-website-id="b946017f-b414-4cab-8166-3e4735fc5c7e"></script>
+
 </head>
 <body>
   <nav class="nav-bar">
-    <a href="index.html" class="nav-logo">weejur</a>
+    <a href="/" class="nav-logo">weejur</a>
     <div class="nav-right"></div>
   </nav>
 
@@ -82,7 +90,7 @@
       <p id="error-message"></p>
       <div class="done-actions">
         <button id="btn-retry" class="btn btn-primary">Try again</button>
-        <a href="dashboard.html" class="btn btn-secondary">Go to dashboard</a>
+        <a href="/dashboard" class="btn btn-secondary">Go to dashboard</a>
       </div>
     </section>
   </div>
@@ -93,16 +101,16 @@
         <p>Made by <a href="https://npilk.com" target="_blank" rel="noopener">npilk</a></p>
         <p><a href="https://github.com" target="_blank" rel="noopener">GitHub</a> and GitHub Pages &copy; Microsoft</p>
         <p>weejur is not affiliated with GitHub.</p>
-        <p>Need help? <a href="/faq.html#troubleshooting">Troubleshooting</a></p>
+        <p>Need help? <a href="/faq#troubleshooting">Troubleshooting</a></p>
         <p>Questions? <a href="mailto:contact@weejur.com">Send us an email</a></p>
       </div>
       <div class="footer-image">
-        <img src="cabin-complete.png" alt="Animal construction workers smiling in front of a finished log cabin">
+        <img src="assets/cabin-complete.png" alt="Animal construction workers smiling in front of a finished log cabin">
       </div>
     </div>
   </footer>
 
-  <script src="shared.js"></script>
-  <script src="new.js"></script>
+  <script src="js/shared.js"></script>
+  <script src="js/new.js"></script>
 </body>
 </html>

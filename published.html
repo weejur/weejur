@@ -2,14 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://stats.npilk.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://api.github.com https://auth.weejur.com; img-src 'self' data:;">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>weejur — Site Published</title>
-  <link rel="icon" type="image/png" href="favicon.png">
-  <link rel="stylesheet" href="style.css">
+  <title>weejur — Site published!</title>
+  <meta property="og:image" content="https://weejur.com/assets/weejur.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://weejur.com/assets/weejur.png">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
   <nav class="nav-bar">
-    <a href="index.html" class="nav-logo">weejur</a>
+    <a href="/" class="nav-logo">weejur</a>
     <div class="nav-right"></div>
   </nav>
 
@@ -22,7 +26,7 @@
             <p class="site-status-title">Checking if your site is live... <span class="site-status-spinner"></span></p>
             <p class="site-status-hint">This usually takes 30 seconds to a minute.</p>
           </div>
-          <img src="loading.png" alt="Loading" class="site-status-img">
+          <img src="assets/loading.png" alt="Loading" class="site-status-img">
         </div>
       </div>
       <div id="site-status-live" class="site-status site-status-live" hidden>
@@ -31,7 +35,7 @@
             <p class="site-status-live-text">Your site is live!</p>
             <p class="site-status-hint">Click the link below to visit your site. Or, copy the link to share with others.</p>
           </div>
-          <img src="success.png" alt="Success" class="site-status-img">
+          <img src="assets/success.png" alt="Success" class="site-status-img">
         </div>
       </div>
       <div id="site-status-slow" class="site-status" hidden>
@@ -41,10 +45,10 @@
         <a id="site-url" href="#" target="_blank" rel="noopener"></a>
         <button id="btn-copy-url" class="btn btn-secondary btn-small">Copy link</button>
       </div>
-      <p class="done-help">Having issues? <a href="faq.html#troubleshooting">Troubleshooting</a></p>
+      <p class="done-help">Having issues? <a href="/faq#troubleshooting">Troubleshooting</a></p>
       <div class="done-actions-buttons">
         <a id="btn-update-site" href="#" class="btn btn-primary">Update this site again</a>
-        <a href="dashboard.html" class="btn btn-secondary btn-muted">See all websites</a>
+        <a href="/dashboard" class="btn btn-secondary btn-muted">See all websites</a>
         <button id="btn-new-site" class="btn btn-secondary btn-muted">Publish another site</button>
       </div>
     </section>
@@ -56,16 +60,16 @@
         <p>Made by <a href="https://npilk.com" target="_blank" rel="noopener">npilk</a></p>
         <p><a href="https://github.com" target="_blank" rel="noopener">GitHub</a> and GitHub Pages &copy; Microsoft</p>
         <p>weejur is not affiliated with GitHub.</p>
-        <p>Need help? <a href="/faq.html#troubleshooting">Troubleshooting</a></p>
+        <p>Need help? <a href="/faq#troubleshooting">Troubleshooting</a></p>
         <p>Questions? <a href="mailto:contact@weejur.com">Send us an email</a></p>
       </div>
       <div class="footer-image">
-        <img src="cabin-complete.png" alt="Animal construction workers smiling in front of a finished log cabin">
+        <img src="assets/cabin-complete.png" alt="Animal construction workers smiling in front of a finished log cabin">
       </div>
     </div>
   </footer>
 
-  <script src="shared.js"></script>
-  <script src="published.js"></script>
+  <script src="js/shared.js"></script>
+  <script src="js/published.js"></script>
 </body>
 </html>
