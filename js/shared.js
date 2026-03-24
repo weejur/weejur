@@ -3,8 +3,9 @@
 // =============================================================================
 
 const CONFIG = {
-  githubClientId: "Ov23liRRI1gWCv1OktMJ",
+  githubClientId: "Ov23livjtgqTn9Lhqwbn",
   workerUrl: "https://auth.weejur.com",
+  redirectUri: "https://weejur.com/",
 };
 
 const $ = (id) => document.getElementById(id);

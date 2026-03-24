@@ -242,7 +242,7 @@
 
     // Start OAuth
     $("btn-signin").addEventListener("click", () => {
-      const redirectUri = window.location.origin + window.location.pathname;
+      const redirectUri = CONFIG.redirectUri || (window.location.origin + window.location.pathname);
       const scope = "public_repo delete_repo";
       const state = generateOAuthState();
       const url =
