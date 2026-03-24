@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShipSite — My Sites</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="nav-bar">
+    <a href="index.html" class="nav-logo">ShipSite</a>
+    <div class="nav-right">
+      <span id="nav-username"></span>
+      <a href="new.html" class="btn btn-primary btn-small">New site</a>
+      <button id="btn-signout" class="btn btn-secondary btn-small">Sign out</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2 class="page-title">My Sites</h2>
+
+    <div id="loading" class="loading-spinner">Loading your sites...</div>
+
+    <div id="site-list" class="site-list" hidden></div>
+
+    <div id="empty-state" class="empty-state" hidden>
+      <p>You haven't published any sites yet.</p>
+      <a href="new.html" class="btn btn-primary btn-large">Create your first site</a>
+    </div>
+  </div>
+
+  <!-- Delete confirmation modal -->
+  <div id="delete-modal" class="modal-overlay" hidden>
+    <div class="modal">
+      <h3>Delete site</h3>
+      <p>This will permanently delete the repository <strong id="delete-repo-name"></strong> and its GitHub Pages site. This cannot be undone.</p>
+      <p>Type the repository name to confirm:</p>
+      <input type="text" id="delete-confirm-input" class="modal-input" autocomplete="off" spellcheck="false">
+      <div class="modal-actions">
+        <button id="btn-delete-cancel" class="btn btn-secondary">Cancel</button>
+        <button id="btn-delete-confirm" class="btn btn-danger" disabled>Delete this site</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="shared.js"></script>
+  <script src="dashboard.js"></script>
+</body>
+</html>

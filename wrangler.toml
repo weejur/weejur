@@ -1,0 +1,9 @@
+name = "shipsite-auth"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+GITHUB_CLIENT_ID = "Ov23liRRI1gWCv1OktMJ"
+ALLOWED_ORIGIN = "http://localhost:5500"
+
+# GITHUB_CLIENT_SECRET should be set via: wrangler secret put GITHUB_CLIENT_SECRET
