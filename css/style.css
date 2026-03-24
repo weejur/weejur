@@ -1097,6 +1097,9 @@ body {
   .done-actions-buttons .btn-primary + .btn-muted {
     margin-left: 0;
   }
+  .html-paste {
+    font-size: 1rem;
+  }
 }
 
 /* =============================================================================
