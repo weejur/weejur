@@ -48,7 +48,10 @@ function signOut() {
 }
 
 function generateOAuthState() {
-  const state = crypto.randomUUID();
+  const state = crypto.randomUUID?.() ||
+    Array.from(crypto.getRandomValues(new Uint8Array(16)))
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
   sessionStorage.setItem("weejur_oauth_state", state);
   return state;
 }
