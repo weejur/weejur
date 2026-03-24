@@ -3,22 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>weejur — My websites</title>
+  <title>weejur — Your websites</title>
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <nav class="nav-bar">
     <a href="index.html" class="nav-logo">weejur</a>
-    <div class="nav-right">
-      <span id="nav-username"></span>
-      <button id="btn-signout" class="btn btn-ghost btn-small">Sign out</button>
-    </div>
+    <div class="nav-right"></div>
   </nav>
 
   <div class="container">
     <div class="page-header">
-      <h2 class="page-title">My websites</h2>
+      <h2 class="page-title">Your websites</h2>
       <a id="btn-new-site" href="new.html" class="btn btn-primary btn-large" style="padding:14px 22px;" hidden>New site&ensp;+</a>
     </div>
 
@@ -30,6 +27,8 @@
       <p>You haven't published any sites yet.</p>
       <a href="new.html" class="btn btn-primary btn-large">Create your first site</a>
     </div>
+
+    <p id="dashboard-help" class="done-help" hidden>Having issues with a site? <a href="faq.html#troubleshooting">Troubleshooting</a></p>
   </div>
 
   <!-- Delete confirmation modal -->
@@ -50,8 +49,9 @@
     <div class="footer-inner">
       <div class="footer-text">
         <p>Made by <a href="https://npilk.com" target="_blank" rel="noopener">npilk</a></p>
-        <p><a href="https://github.com" target="_blank" rel="noopener">GitHub</a> and <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a> &copy; Microsoft</p>
+        <p><a href="https://github.com" target="_blank" rel="noopener">GitHub</a> and GitHub Pages &copy; Microsoft</p>
         <p>weejur is not affiliated with GitHub.</p>
+        <p>Need help? <a href="/faq.html#troubleshooting">Troubleshooting</a></p>
         <p>Questions? <a href="mailto:contact@weejur.com">Send us an email</a></p>
       </div>
       <div class="footer-image">

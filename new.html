@@ -10,11 +10,7 @@
 <body>
   <nav class="nav-bar">
     <a href="index.html" class="nav-logo">weejur</a>
-    <div class="nav-right">
-      <span id="nav-username"></span>
-      <a href="dashboard.html" class="btn btn-secondary btn-small">My sites</a>
-      <button id="btn-signout" class="btn btn-ghost btn-small">Sign out</button>
-    </div>
+    <div class="nav-right"></div>
   </nav>
 
   <div class="container">
@@ -80,30 +76,6 @@
       </div>
     </section>
 
-    <!-- Step: Done! -->
-    <section id="step-done" class="step">
-      <h2 id="done-heading">Your site has been published!</h2>
-      <div id="site-status-checking" class="site-status">
-        <div class="site-status-spinner"></div>
-        <p>Waiting for your site to come online...</p>
-        <p class="site-status-hint">This usually takes 30 seconds to a minute.</p>
-      </div>
-      <div id="site-status-live" class="site-status" hidden>
-        <p class="site-status-live-text">Your site is now live!</p>
-      </div>
-      <div id="site-status-slow" class="site-status" hidden>
-        <p class="site-status-slow-text">This is taking longer than expected. Your site may still be deploying — try visiting the link below.</p>
-      </div>
-      <div class="site-url-box">
-        <a id="site-url" href="#" target="_blank" rel="noopener"></a>
-        <button id="btn-copy-url" class="btn btn-secondary btn-small">Copy link</button>
-      </div>
-      <div class="done-actions">
-        <a href="dashboard.html" class="btn btn-secondary">Go to dashboard</a>
-        <button id="btn-new-site" class="btn btn-secondary">Publish another site</button>
-      </div>
-    </section>
-
     <!-- Error state -->
     <section id="step-error" class="step">
       <h2>Something went wrong</h2>
@@ -119,8 +91,9 @@
     <div class="footer-inner">
       <div class="footer-text">
         <p>Made by <a href="https://npilk.com" target="_blank" rel="noopener">npilk</a></p>
-        <p><a href="https://github.com" target="_blank" rel="noopener">GitHub</a> and <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a> &copy; Microsoft</p>
+        <p><a href="https://github.com" target="_blank" rel="noopener">GitHub</a> and GitHub Pages &copy; Microsoft</p>
         <p>weejur is not affiliated with GitHub.</p>
+        <p>Need help? <a href="/faq.html#troubleshooting">Troubleshooting</a></p>
         <p>Questions? <a href="mailto:contact@weejur.com">Send us an email</a></p>
       </div>
       <div class="footer-image">

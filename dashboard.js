@@ -5,8 +5,8 @@
 if (!requireAuth()) throw new Error("Not authenticated");
 
 const username = getUsername();
-$("nav-username").textContent = username;
-$("btn-signout").addEventListener("click", signOut);
+initNavbar();
+
 
 // =============================================================================
 // Fetch and display sites
@@ -14,10 +14,12 @@ $("btn-signout").addEventListener("click", signOut);
 
 async function loadSites() {
   try {
-    const data = await githubApi(
-      `/search/repositories?q=topic:weejur+user:${username}&sort=updated&order=desc`
+    const allRepos = await githubApi(
+      `/user/repos?type=owner&sort=updated&per_page=100`
     );
-    const repos = data.items || [];
+    const repos = (allRepos || []).filter(
+      (r) => r.topics && r.topics.includes("weejur")
+    );
 
     $("loading").hidden = true;
 
@@ -29,6 +31,7 @@ async function loadSites() {
     const list = $("site-list");
     list.hidden = false;
     $("btn-new-site").hidden = false;
+    $("dashboard-help").hidden = false;
 
     for (const repo of repos) {
       const liveUrl = `https://${username}.github.io/${repo.name}/`;
@@ -37,19 +40,28 @@ async function loadSites() {
       card.id = `card-${repo.name}`;
       card.innerHTML = `
         <div class="site-card-info">
-          <h3 class="site-card-name">${repo.name}
-            <button class="site-card-copy" data-url="${liveUrl}" title="Copy link">
+          <h3 class="site-card-name">
+            <span class="site-card-name-text"></span>
+            <button class="site-card-copy" title="Copy link">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
             </button>
           </h3>
-          <a href="${liveUrl}" class="site-card-url" target="_blank" rel="noopener">${liveUrl}</a>
-          <a href="https://github.com/${username}/${repo.name}" class="site-card-repo" target="_blank" rel="noopener">View repo on GitHub</a>
+          <a class="site-card-url" target="_blank" rel="noopener"></a>
+          <a class="site-card-repo" target="_blank" rel="noopener">View repo on GitHub</a>
         </div>
         <div class="site-card-actions">
-          <a href="new.html?update=${encodeURIComponent(repo.name)}" class="btn btn-secondary btn-small">Update</a>
-          <button class="btn btn-danger btn-small" data-repo="${repo.name}">Delete</button>
+          <a class="btn btn-secondary btn-small">Update</a>
+          <button class="btn btn-danger btn-small">Delete</button>
         </div>
       `;
+      card.querySelector(".site-card-name-text").textContent = repo.name;
+      card.querySelector(".site-card-copy").dataset.url = liveUrl;
+      const urlLink = card.querySelector(".site-card-url");
+      urlLink.href = liveUrl;
+      urlLink.textContent = liveUrl;
+      card.querySelector(".site-card-repo").href = `https://github.com/${encodeURIComponent(username)}/${encodeURIComponent(repo.name)}`;
+      card.querySelector(".btn-secondary").href = `new.html?update=${encodeURIComponent(repo.name)}`;
+      card.querySelector(".btn-danger").dataset.repo = repo.name;
       list.appendChild(card);
     }
 
@@ -127,6 +139,7 @@ $("btn-delete-confirm").addEventListener("click", async () => {
     if ($("site-list").children.length === 0) {
       $("site-list").hidden = true;
       $("btn-new-site").hidden = true;
+      $("dashboard-help").hidden = true;
       $("empty-state").hidden = false;
     }
   } catch (err) {

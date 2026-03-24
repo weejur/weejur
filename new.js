@@ -5,8 +5,7 @@
 if (!requireAuth()) throw new Error("Not authenticated");
 
 const username = getUsername();
-$("nav-username").textContent = username;
-$("btn-signout").addEventListener("click", signOut);
+initNavbar();
 
 // =============================================================================
 // State
@@ -22,9 +21,13 @@ const isUpdateMode = !!updateRepo;
 // =============================================================================
 
 if (isUpdateMode) {
-  $("files-heading").textContent = 'Updating "${updateRepo}"';
+  $("files-heading").textContent = `Updating "${updateRepo}"`;
+  $("btn-paste-next").textContent = "Publish";
+  $("btn-files-next").textContent = "Publish";
   $("publishing-heading").textContent = "Updating your site...";
-  $("done-heading").textContent = "Your site has been updated!";
+  const uploadHint = document.createElement("p");
+  uploadHint.textContent = "Make sure you include all your website's files, not just the ones that are new or updated.";
+  $("panel-upload").querySelector("p").after(uploadHint);
 }
 
 // =============================================================================
@@ -35,7 +38,6 @@ const steps = {
   files: $("step-files"),
   name: $("step-name"),
   publishing: $("step-publishing"),
-  done: $("step-done"),
   error: $("step-error"),
 };
 
@@ -188,11 +190,7 @@ async function publishCreate(repoName) {
     });
     setProgress("ps-enable", "done");
 
-    const siteUrl = `https://${username}.github.io/${repoName}/`;
-    $("site-url").href = siteUrl;
-    $("site-url").textContent = siteUrl;
-    showStep("done");
-    pollForSite(siteUrl, repo.full_name);
+    window.location.href = `published.html?repo=${encodeURIComponent(repoName)}`;
   } catch (err) {
     const activeStep = document.querySelector(".progress-step.active");
     if (activeStep) activeStep.classList.replace("active", "error");
@@ -270,52 +268,12 @@ async function publishUpdate() {
     }
     setProgress("ps-enable", "done");
 
-    const siteUrl = `https://${username}.github.io/${updateRepo}/`;
-    $("site-url").href = siteUrl;
-    $("site-url").textContent = siteUrl;
-    showStep("done");
-    pollForSite(siteUrl, repoFullName);
+    window.location.href = `published.html?repo=${encodeURIComponent(updateRepo)}&updated=1`;
   } catch (err) {
     const activeStep = document.querySelector(".progress-step.active");
     if (activeStep) activeStep.classList.replace("active", "error");
     showError(err.message);
   }
-}
-
-async function pollForSite(url, repoFullName) {
-  const timeout = 120000;
-  const interval = 4000;
-  const startTime = Date.now();
-
-  $("site-status-checking").hidden = false;
-  $("site-status-live").hidden = true;
-  $("site-status-slow").hidden = true;
-
-  await new Promise((resolve) => setTimeout(resolve, interval));
-
-  while (Date.now() - startTime < timeout) {
-    try {
-      // Check the actual URL via the worker (bypasses CORS)
-      const res = await fetch(
-        `${CONFIG.workerUrl}/check-site?url=${encodeURIComponent(url)}`,
-      );
-      const data = await res.json();
-      if (data.status >= 200 && data.status < 400) {
-        $("site-status-checking").hidden = true;
-        $("site-status-live").hidden = false;
-        $("done-heading").textContent = isUpdateMode
-          ? "Your site has been updated!"
-          : "Your site is live!";
-        return;
-      }
-    } catch {
-      // Worker unavailable, keep polling
-    }
-    await new Promise((resolve) => setTimeout(resolve, interval));
-  }
-
-  $("site-status-checking").hidden = true;
-  $("site-status-slow").hidden = false;
 }
 
 function setProgress(id, state) {
@@ -325,30 +283,8 @@ function setProgress(id, state) {
 }
 
 // =============================================================================
-// Done / Error
+// Error
 // =============================================================================
-
-$("btn-copy-url").addEventListener("click", async () => {
-  const url = $("site-url").href;
-  try {
-    await navigator.clipboard.writeText(url);
-    $("btn-copy-url").textContent = "Copied!";
-    setTimeout(() => ($("btn-copy-url").textContent = "Copy link"), 2000);
-  } catch {
-    const input = document.createElement("input");
-    input.value = url;
-    document.body.appendChild(input);
-    input.select();
-    document.execCommand("copy");
-    document.body.removeChild(input);
-    $("btn-copy-url").textContent = "Copied!";
-    setTimeout(() => ($("btn-copy-url").textContent = "Copy link"), 2000);
-  }
-});
-
-$("btn-new-site").addEventListener("click", () => {
-  window.location.href = "new.html";
-});
 
 function showError(message) {
   $("error-message").textContent = message;

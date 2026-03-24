@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>weejur — Frequently asked questions</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav class="nav-bar">
+    <a href="index.html" class="nav-logo">weejur</a>
+    <div class="nav-right"></div>
+  </nav>
+
+  <div class="learn-layout">
+    <aside class="learn-sidebar">
+      <nav class="learn-toc">
+        <a href="#basics" class="learn-toc-heading">Learn the basics</a>
+        <a href="#what-is-github" class="learn-toc-link active">GitHub</a>
+        <a href="#what-is-a-repo" class="learn-toc-link">Repos</a>
+        <a href="#what-is-git" class="learn-toc-link">Git</a>
+        <a href="#what-is-github-pages" class="learn-toc-link">GitHub Pages</a>
+        <a href="#what-is-a-static-website" class="learn-toc-link">Static websites</a>
+        <a href="#troubleshooting" class="learn-toc-heading">Troubleshooting</a>
+        <a href="#site-not-up" class="learn-toc-link">Site not showing up</a>
+        <a href="#no-styling" class="learn-toc-link">Unexpected styling</a>
+        <a href="#images-broken" class="learn-toc-link">Broken images</a>
+        <a href="#update-site" class="learn-toc-link">Updating content</a>
+        <a href="#custom-domain" class="learn-toc-link">Custom domains</a>
+      </nav>
+    </aside>
+
+    <main class="learn-content">
+
+      <h1 class="faq-title">Frequently asked questions</h1>
+
+      <!-- ============ BASICS ============ -->
+
+      <div class="learn-heading-row">
+        <h2 id="basics" class="learn-heading">Learn the basics</h2>
+        <img src="learn.png" alt="" class="learn-heading-img">
+      </div>
+
+      <section id="what-is-github" class="learn-section">
+        <h2>What is GitHub?</h2>
+        <p>Think of <a href="https://github.com" target="_blank" rel="noopener">GitHub</a> as an online folder where people can store, share, and collaborate on projects. It's mostly used by programmers, but anyone can use it.</p>
+        <p>When you use weejur, we put your website's files into a folder ("repo") on GitHub, and use one of their free features to make it a shareable website.</p>
+      </section>
+
+      <section id="what-is-a-repo" class="learn-section">
+        <h2>What is a repository ("repo")?</h2>
+        <p>A Git repository (or "repo") is what project folders are called on GitHub. When you create a site with weejur, a repo is automatically created for you with your website files inside it. Git repos have some extra features programmers use for things like version control.</p>
+        <p>Each site you make gets its own repo. If you want to see your files, you can visit your repo on GitHub — you'll find a link on your <a href="dashboard.html">dashboard</a>.</p>
+      </section>
+
+      <section id="what-is-git" class="learn-section">
+        <h2>What is Git?</h2>
+        <p><a href="https://github.com" target="_blank" rel="noopener">Git</a> is a tool that keeps track of every change made to a project's files — like a super-powered "undo" history. It was originally created by Linus Torvalds while developing Linux.</p>
+        <p>GitHub (along with similar platforms like GitLab) is a website built on top of Git, making it easier for people to collaborate on different versions of a project's code.</p>
+        <p>You don't need to learn or install Git to use weejur or GitHub Pages.</p>
+      </section>
+
+      <section id="what-is-github-pages" class="learn-section">
+        <h2>What is GitHub Pages?</h2>
+        <p><a href="https://docs.github.com/en/pages" target="_blank" rel="noopener">GitHub Pages</a> is a free feature from GitHub that turns a repository into a live website. Instead of just storing your files, GitHub also serves them to anyone who visits your URL.</p>
+        <p>When you publish a site with weejur, we make a repo and flip this switch on for you. Your site gets a URL like <code>username.github.io/my-site</code> and it's live on the internet for free.</p>
+        <p>Other companies like GitLab and Cloudflare offer similar free functionality (GitLab Pages and Cloudflare Pages).</p>
+      </section>
+
+      <section id="what-is-a-static-website" class="learn-section">
+        <h2>What is a static website?</h2>
+        <p>A static website is a website where the user doesn't make any changes to the content. Think of sites like blogs, personal websites, and simple company pages.</p>
+        <p>The opposite is a dynamic website, or web app. Usually, these are sites where users can change the content or submit new information. Examples would be shopping on Amazon, posting on LinkedIn, using Google Docs, or filling out customer data in Salesforce &mdash; all of which are web apps.</p>
+        <p>GitHub Pages lets you host static websites for free. That's what weejur helps make easier. To host a dynamic website (web app), you'd need to pay for a hosting provider like AWS or Railway to run the backend code.</p>
+      </section>
+
+      <!-- ============ TROUBLESHOOTING ============ -->
+
+      <div class="learn-heading-row">
+        <h2 id="troubleshooting" class="learn-heading">Troubleshooting</h2>
+        <img src="troubleshooting.png" alt="" class="learn-heading-img">
+      </div>
+
+      <section id="site-not-up" class="learn-section">
+        <h2>Why isn't my site showing up?</h2>
+        <ul>
+          <li><strong>Give it a minute.</strong> When you first publish, GitHub Pages needs a little time to set up. If you're seeing a 404 error, try waiting a minute or two and then refreshing the page.</li>
+          <li><strong>Check the URL.</strong> Make sure you're visiting the right address. You can find it on your <a href="dashboard.html">dashboard</a> — click the link there to make sure.</li>
+          <li><strong>Make sure you have an index.html.</strong> GitHub Pages looks for a file called <code>index.html</code> as your home page. If you uploaded files, make sure one of them is named <code>index.html</code> and re-publish. Or, if you have a file called <code>example.html</code>, try visiting <code>username.github.io/yoursite/example.html</code> instead.</li>
+          <li><strong>Still not working?</strong> Try deleting the site from your dashboard and creating it again. Sometimes a fresh start fixes things.</li>
+        </ul>
+      </section>
+
+      <section id="no-styling" class="learn-section">
+        <h2>Why does my site look different ("plainer") than expected?</h2>
+        <ul>
+          <li><strong>Double-check your HTML.</strong> If you just see a bunch of plain text instead of a website, it's likely there is something wrong with your HTML file. If you're copying from somewhere else, make sure you copy and paste the entire block of code.</li>
+          <li><strong>Upload any CSS files.</strong> Some websites use separate CSS files to apply styles like different colors and font sizes. Look in the start of your HTML file (the <code>&lt;head&gt;</code> section) &mdash; if your site links to a CSS file like <code>styles.css</code>, make sure you upload those files alongside your HTML.</li>
+          <li><strong>Double-check any external links.</strong> Or, some websites will link to public CSS files (like <a href="https://www.tailwindcss.com" target="_blank" rel="noopener">Tailwind</a> or <a href="https://www.getbootstrap.com" target="_blank" rel="noopener">Bootstrap</a>) to apply some standard styles. If you're using those sources, make sure you have the right links.</li>
+        </ul>
+      </section>
+
+      <section id="images-broken" class="learn-section">
+        <h2>How do I get images to show up on my website?</h2>
+        <ul>
+          <li><strong>Upload them with your site.</strong> If your HTML references images (like <code>&lt;img&nbsp;src="photo.jpg"&gt;</code>), you need to upload those image files alongside your HTML in order for them to show up on your website. Use the "Upload files" tab and select multiple files or an entire project folder.</li>
+          <li><strong>Check file names and extensions.</strong> File names are case-sensitive. If your HTML says <code>photo.jpg</code> but the file is called <code>Photo.jpg</code> or <code>photo.png</code>, it won't work. Make sure they match exactly.</li>
+          <li><strong>Using AI-generated HTML?</strong> If you pasted HTML from ChatGPT or Claude, the images in the code might be placeholders that don't actually exist. You'll need to replace them with your own images, or use a service like <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a> for free stock photos.</li>
+        </ul>
+      </section>
+
+      <section id="update-site" class="learn-section">
+        <h2>How do I update my website?</h2>
+        <p>Go to <a href="dashboard.html">Your websites</a>, find the site you want to update, and click <strong>Update</strong>. Upload new files or paste updated HTML, then click <strong>Publish</strong> again. Your changes will go live within a minute or two at the same URL.</p>
+        <p><strong>Tip:</strong> If you're making small changes, you can also edit files directly on GitHub. Click the repo link on your dashboard, find the file, and click the pencil icon to edit it right in your browser.</p>
+      </section>
+
+      <section id="custom-domain" class="learn-section">
+        <h2>How do I use my own domain name, like "myname.com"?</h2>
+        <p>By default, your website will live at <code>username.github.io/site-name</code>. If you want a custom domain like <code>example.com</code> instead, it's easy to set up, but it takes a few extra steps (and the domain name will cost a bit of money). GitHub has a <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site" target="_blank" rel="noopener">detailed guide</a> you can follow, but here's the gist:</p>
+        <ul>
+          <li><strong>Buy a domain.</strong> You'll need to purchase a domain name from a registrar like <a href="https://www.namecheap.com" target="_blank" rel="noopener">Namecheap</a>, <a href="https://www.cloudflare.com/products/registrar/" target="_blank" rel="noopener">Cloudflare</a>, or <a href="https://porkbun.com/" target="_blank" rel="noopener">Porkbun</a>. Prices are often around $10/year.</li>
+          <li><strong>Point it to GitHub.</strong> In your domain registrar's DNS settings, add a CNAME record pointing to <code>yourusername.github.io</code>. Your registrar will have instructions, and <a href="https://docs.github.com/en/pages/configuring-a-custom-domain-for-your-github-pages-site/managing-a-custom-domain-for-your-github-pages-site#dns-records-for-your-custom-domain" target="_blank" rel="noopener">GitHub's guide</a> has more details as well.</li>
+          <li><strong>Update GitHub.</strong> Go to your repo on GitHub, then Settings → Pages → Custom domain. Enter your domain name and save. (You can find links to your repos on <a href="dashboard.html">Your websites</a>.)</li>
+        </ul>
+        
+      </section>
+
+
+    </main>
+  </div>
+
+  <script src="shared.js"></script>
+  <script>
+    initNavbar();
+
+    // Highlight active TOC link on scroll
+    const sections = document.querySelectorAll('.learn-section');
+    const tocLinks = document.querySelectorAll('.learn-toc-link');
+
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          tocLinks.forEach(link => link.classList.remove('active'));
+          const active = document.querySelector(`.learn-toc-link[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      }
+    }, { rootMargin: '-140px 0px -60% 0px' });
+
+    sections.forEach(section => observer.observe(section));
+
+    // Smooth scroll on all TOC clicks (links and headings)
+    document.querySelectorAll('.learn-toc-link, .learn-toc-heading').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.replaceState(null, '', link.getAttribute('href'));
+        }
+      });
+    });
+  </script>
+
+  <footer class="landing-footer">
+    <div class="footer-inner">
+      <div class="footer-text">
+        <p>Made by <a href="https://npilk.com" target="_blank" rel="noopener">npilk</a></p>
+        <p><a href="https://github.com" target="_blank" rel="noopener">GitHub</a> and GitHub Pages &copy; Microsoft</p>
+        <p>weejur is not affiliated with GitHub.</p>
+        <p>Need help? <a href="/faq.html#troubleshooting">Troubleshooting</a></p>
+        <p>Questions? <a href="mailto:contact@weejur.com">Send us an email</a></p>
+      </div>
+      <div class="footer-image">
+        <img src="cabin-complete.png" alt="Your site is live">
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

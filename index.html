@@ -10,9 +10,7 @@
 <body class="landing">
   <nav class="nav-bar">
     <a href="index.html" class="nav-logo">weejur</a>
-    <div class="nav-right">
-      <button id="nav-signin" class="btn btn-ghost btn-small">Sign in with GitHub</button>
-    </div>
+    <div class="nav-right"></div>
   </nav>
 
   <!-- Login modal -->
@@ -22,8 +20,8 @@
 
       <!-- Default: sign-in view -->
       <div id="view-signin">
-        <h2 class="login-title">Log in with GitHub to <span style="white-space:nowrap">publish your site</span></h2>
-        <p class="login-subtitle">weejur uses GitHub Pages to host your website for free. Sign in with GitHub to get started.</p>
+        <h2 id="login-title" class="login-title">Log in with GitHub to <span style="white-space:nowrap">publish your site</span></h2>
+        <p class="login-subtitle">weejur uses GitHub Pages to host your websites for free. Sign in with GitHub to get started.</p>
         <p class="login-subtitle">Don't have a GitHub account? No problem! You can make one for free on the next page.</p>
         <button id="btn-signin" class="btn btn-primary btn-large">
           <svg viewBox="0 0 16 16" width="20" height="20" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
@@ -33,7 +31,7 @@
 
       <!-- Loading view -->
       <div id="view-loading" hidden>
-        <p class="login-subtitle">Signing you in...</p>
+        <p class="login-subtitle">Logging you in...</p>
         <div class="site-status-spinner" style="border-color: var(--coral); border-top-color: transparent; margin: 24px auto 0;"></div>
       </div>
 
@@ -117,12 +115,12 @@
       <div class="step-card">
         <img src="step-3.png" alt="Completed log cabin" class="step-image">
         <h3>Share your website</h3>
-        <p>Your site gets a public URL instantly. Share it with anyone, anywhere in the world.</p>
+        <p>Your site gets a public URL in seconds. Share it with anyone around the world.</p>
       </div>
     </div>
     <div style="text-align: center; margin-top: 40px; display: flex; gap: 12px; justify-content: center;">
-      <a href="/learn" class="btn btn-ghost btn-large">Learn more</a>
-      <button id="bottom-signin" class="btn btn-primary btn-large">Get started →</button>
+      <a href="/faq.html" class="btn btn-ghost btn-large">Learn more</a>
+      <button id="bottom-signin" class="btn btn-primary btn-large">Get started<span id="get-started-arrow"> →</span></button>
     </div>
   </section>
 
@@ -139,7 +137,7 @@
       </div>
       <div class="about-card">
         <h3>Is it really free?</h3>
-        <p>Yes, GitHub Pages is completely free for public sites. (Other companies like Gitlab and Cloudflare have similar offerings, too.) A custom domain name costs a bit of money, but there's no upcharge to connect it to your site.</p>
+        <p>Yes, GitHub Pages is completely free for public sites. (Other companies like GitLab and Cloudflare have similar offerings.) A custom domain name costs a bit of money, but there's no upcharge to connect it to your site.</p>
       </div>
       <div class="about-card">
         <h3>What can I host?</h3>
@@ -152,8 +150,9 @@
     <div class="footer-inner">
       <div class="footer-text">
         <p>Made by <a href="https://npilk.com" target="_blank" rel="noopener">npilk</a></p>
-        <p><a href="https://github.com" target="_blank" rel="noopener">GitHub</a> and <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a> &copy; Microsoft</p>
+        <p><a href="https://github.com" target="_blank" rel="noopener">GitHub</a> and GitHub Pages &copy; Microsoft</p>
         <p>weejur is not affiliated with GitHub.</p>
+        <p>Need help? <a href="/faq.html#troubleshooting">Troubleshooting</a></p>
         <p>Questions? <a href="mailto:contact@weejur.com">Send us an email</a></p>
       </div>
       <div class="footer-image">
@@ -164,11 +163,6 @@
 
   <script src="shared.js"></script>
   <script>
-    // If already signed in, go straight to the app
-    if (getToken() && getUsername()) {
-      window.location.href = "dashboard.html";
-    }
-
     const picker = initFilePicker({
       onFilesReady(files) {
         $("btn-publish-cta").hidden = !files;
@@ -185,12 +179,13 @@
       const files = picker.getFiles() || picker.getPastedFiles();
       if (!files) return;
       await savePendingFiles(files);
-      openLoginModal();
+      openLoginModal('Log in with GitHub to <span style="white-space:nowrap">publish your site</span>');
     });
 
     // --- Login modal logic ---
 
-    function openLoginModal() {
+    function openLoginModal(title) {
+      $("login-title").innerHTML = title || "Log in with GitHub";
       $("login-overlay").hidden = false;
     }
 
@@ -209,9 +204,11 @@
       showView("error");
     }
 
-    // Open modal from nav / bottom CTA
-    $("nav-signin").addEventListener("click", openLoginModal);
-    $("bottom-signin").addEventListener("click", openLoginModal);
+    // Init navbar — pass custom sign-in handler for the modal
+    initNavbar({ onSignIn: async () => { await clearPendingFiles(); openLoginModal(); } });
+
+    // Open modal from bottom CTA
+    $("bottom-signin").addEventListener("click", async () => { await clearPendingFiles(); openLoginModal(); });
 
     // Close modal on overlay click
     $("login-overlay").addEventListener("click", (e) => {
@@ -225,11 +222,13 @@
     $("btn-signin").addEventListener("click", () => {
       const redirectUri = window.location.origin + window.location.pathname;
       const scope = "public_repo delete_repo";
+      const state = generateOAuthState();
       const url =
         `https://github.com/login/oauth/authorize` +
         `?client_id=${CONFIG.githubClientId}` +
         `&redirect_uri=${encodeURIComponent(redirectUri)}` +
-        `&scope=${encodeURIComponent(scope)}`;
+        `&scope=${encodeURIComponent(scope)}` +
+        `&state=${encodeURIComponent(state)}`;
       window.location.href = url;
     });
 
@@ -240,6 +239,14 @@
       if (!code) {
         // Auto-open modal if redirected here with ?login
         if (params.has("login")) openLoginModal();
+        return;
+      }
+
+      const state = params.get("state");
+      if (!verifyOAuthState(state)) {
+        window.history.replaceState({}, "", window.location.pathname);
+        openLoginModal();
+        showError("Sign-in was interrupted. Please try again.");
         return;
       }
 
@@ -280,17 +287,9 @@
           window.location.href = "new.html";
           return;
         }
-        const username = getUsername();
-        const data = await githubApi(
-          `/search/repositories?q=topic:weejur+user:${username}`
-        );
-        if (data && data.total_count > 0) {
-          window.location.href = "dashboard.html";
-        } else {
-          window.location.href = "new.html";
-        }
+        window.location.href = "dashboard.html";
       } catch {
-        window.location.href = "new.html";
+        window.location.href = "dashboard.html";
       }
     }
 

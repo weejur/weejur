@@ -65,11 +65,13 @@
     document.getElementById("btn-signin").addEventListener("click", () => {
       const redirectUri = window.location.origin + window.location.pathname;
       const scope = "public_repo delete_repo";
+      const state = generateOAuthState();
       const url =
         `https://github.com/login/oauth/authorize` +
         `?client_id=${CONFIG.githubClientId}` +
         `&redirect_uri=${encodeURIComponent(redirectUri)}` +
-        `&scope=${encodeURIComponent(scope)}`;
+        `&scope=${encodeURIComponent(scope)}` +
+        `&state=${encodeURIComponent(state)}`;
       window.location.href = url;
     });
 
@@ -85,6 +87,12 @@
       const params = new URLSearchParams(window.location.search);
       const code = params.get("code");
       if (!code) return; // Show sign-in button
+
+      const state = params.get("state");
+      if (!verifyOAuthState(state)) {
+        showError("Sign-in was interrupted. Please try again.");
+        return;
+      }
 
       window.history.replaceState({}, "", window.location.pathname);
       showView("loading");
@@ -119,22 +127,13 @@
 
     async function redirectAfterAuth() {
       try {
-        // If user came from the landing page with files, go straight to new.html
         if (await hasPendingFiles()) {
           window.location.href = "new.html";
           return;
         }
-        const username = getUsername();
-        const data = await githubApi(
-          `/search/repositories?q=topic:weejur+user:${username}`
-        );
-        if (data && data.total_count > 0) {
-          window.location.href = "dashboard.html";
-        } else {
-          window.location.href = "new.html";
-        }
+        window.location.href = "dashboard.html";
       } catch {
-        window.location.href = "new.html";
+        window.location.href = "dashboard.html";
       }
     }
 
@@ -145,8 +144,9 @@
     <div class="footer-inner">
       <div class="footer-text">
         <p>Made by <a href="https://npilk.com" target="_blank" rel="noopener">npilk</a></p>
-        <p><a href="https://github.com" target="_blank" rel="noopener">GitHub</a> and <a href="https://pages.github.com" target="_blank" rel="noopener">GitHub Pages</a> &copy; Microsoft</p>
+        <p><a href="https://github.com" target="_blank" rel="noopener">GitHub</a> and GitHub Pages &copy; Microsoft</p>
         <p>weejur is not affiliated with GitHub.</p>
+        <p>Need help? <a href="/faq.html#troubleshooting">Troubleshooting</a></p>
         <p>Questions? <a href="mailto:contact@weejur.com">Send us an email</a></p>
       </div>
       <div class="footer-image">

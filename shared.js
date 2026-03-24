@@ -4,7 +4,7 @@
 
 const CONFIG = {
   githubClientId: "Ov23liRRI1gWCv1OktMJ",
-  workerUrl: "http://localhost:8787",
+  workerUrl: "https://auth.weejur.com",
 };
 
 const $ = (id) => document.getElementById(id);
@@ -45,6 +45,18 @@ function requireAuth() {
 function signOut() {
   clearToken();
   window.location.href = "index.html";
+}
+
+function generateOAuthState() {
+  const state = crypto.randomUUID();
+  sessionStorage.setItem("weejur_oauth_state", state);
+  return state;
+}
+
+function verifyOAuthState(state) {
+  const expected = sessionStorage.getItem("weejur_oauth_state");
+  sessionStorage.removeItem("weejur_oauth_state");
+  return state && state === expected;
 }
 
 // =============================================================================
@@ -324,6 +336,113 @@ function initFilePicker({ onFilesReady }) {
       dropZone.hidden = false;
     },
   };
+}
+
+// =============================================================================
+// Navbar — shared across all pages
+// =============================================================================
+
+function initNavbar({ onSignIn } = {}) {
+  const navBar = document.querySelector(".nav-bar");
+  const navRight = document.querySelector(".nav-right");
+  if (!navBar || !navRight) return;
+
+  const token = getToken();
+  const username = getUsername();
+
+  navRight.innerHTML = "";
+
+  // Hamburger button (mobile only, controlled via CSS)
+  const existing = navBar.querySelector(".nav-hamburger");
+  if (existing) existing.remove();
+  const hamburger = document.createElement("button");
+  hamburger.className = "nav-hamburger";
+  hamburger.setAttribute("aria-label", "Menu");
+  hamburger.innerHTML = `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>`;
+  navBar.insertBefore(hamburger, navRight);
+
+  hamburger.addEventListener("click", () => {
+    const open = navBar.classList.toggle("nav-open");
+    // Swap to X icon when open
+    hamburger.innerHTML = open
+      ? `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>`
+      : `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>`;
+  });
+
+  // Learn link (always shown)
+  const learnLink = document.createElement("a");
+  learnLink.href = "/faq.html";
+  learnLink.className = "btn btn-ghost btn-small";
+  learnLink.textContent = "FAQ";
+  navRight.appendChild(learnLink);
+
+  if (token && username) {
+    // Your websites
+    const sitesLink = document.createElement("a");
+    sitesLink.href = "/dashboard.html";
+    sitesLink.className = "btn btn-ghost btn-small";
+    sitesLink.textContent = "Your websites";
+    navRight.appendChild(sitesLink);
+
+    // Account dropdown
+    const accountWrap = document.createElement("div");
+    accountWrap.className = "nav-account";
+
+    const accountBtn = document.createElement("button");
+    accountBtn.className = "btn btn-ghost btn-small";
+    accountBtn.textContent = username;
+    accountBtn.setAttribute("aria-expanded", "false");
+    accountWrap.appendChild(accountBtn);
+
+    const dropdown = document.createElement("div");
+    dropdown.className = "nav-dropdown";
+    dropdown.hidden = true;
+
+    dropdown.innerHTML = `
+      <div class="nav-dropdown-header">Logged in as <strong></strong></div>
+      <a class="nav-dropdown-item" target="_blank" rel="noopener">View on GitHub</a>
+      <button class="nav-dropdown-item nav-dropdown-signout">Sign out</button>
+    `;
+    dropdown.querySelector("strong").textContent = username;
+    dropdown.querySelector("a").href = `https://github.com/${encodeURIComponent(username)}`;
+    accountWrap.appendChild(dropdown);
+    navRight.appendChild(accountWrap);
+
+    // Toggle dropdown
+    accountBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const open = !dropdown.hidden;
+      dropdown.hidden = open;
+      accountBtn.setAttribute("aria-expanded", String(!open));
+    });
+
+    // Close on outside click
+    document.addEventListener("click", () => {
+      dropdown.hidden = true;
+      accountBtn.setAttribute("aria-expanded", "false");
+    });
+
+    // Prevent closing when clicking inside dropdown
+    dropdown.addEventListener("click", (e) => e.stopPropagation());
+
+    // Sign out
+    dropdown.querySelector(".nav-dropdown-signout").addEventListener("click", signOut);
+  } else {
+    // Sign in button
+    const signInBtn = document.createElement("button");
+    signInBtn.id = "nav-signin";
+    signInBtn.className = "btn btn-ghost btn-small";
+    signInBtn.textContent = "Sign in with GitHub";
+    navRight.appendChild(signInBtn);
+
+    if (onSignIn) {
+      signInBtn.addEventListener("click", onSignIn);
+    } else {
+      signInBtn.addEventListener("click", () => {
+        window.location.href = "index.html?login";
+      });
+    }
+  }
 }
 
 function findCommonPrefix(paths) {
