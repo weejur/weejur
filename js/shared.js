@@ -172,6 +172,20 @@ async function clearPendingFiles() {
 }
 
 // =============================================================================
+// Hidden file filtering — skip dotfiles from folder uploads, with exceptions
+// =============================================================================
+
+const ALLOWED_DOTFILES = new Set([".well-known", ".htaccess"]);
+
+function isHiddenEntry(name) {
+  return name.startsWith(".") && !ALLOWED_DOTFILES.has(name);
+}
+
+function pathHasHiddenSegment(path) {
+  return path.split("/").some(isHiddenEntry);
+}
+
+// =============================================================================
 // File picker — shared between landing page and new.js
 // =============================================================================
 
@@ -251,6 +265,7 @@ function initFilePicker({ onFilesReady }) {
       const reader = entry.createReader();
       const entries = await new Promise((resolve) => reader.readEntries(resolve));
       for (const child of entries) {
+        if (isHiddenEntry(child.name)) continue;
         await readEntry(child, dirPath);
       }
     }
@@ -266,6 +281,7 @@ function initFilePicker({ onFilesReady }) {
       const content = await file.arrayBuffer();
       let path = file.webkitRelativePath || file.name;
       if (commonPrefix) path = path.substring(commonPrefix.length);
+      if (pathHasHiddenSegment(path)) continue;
       selectedFiles.push({ path, content });
     }
     displayFiles();
