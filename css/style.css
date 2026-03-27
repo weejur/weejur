@@ -1097,7 +1097,8 @@ body {
   .done-actions-buttons .btn-primary + .btn-muted {
     margin-left: 0;
   }
-  .html-paste {
+  .html-paste,
+  .modal-input {
     font-size: 1rem;
   }
 }
