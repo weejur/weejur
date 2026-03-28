@@ -465,26 +465,54 @@ body {
    Landing Page — Social Proof
    ============================================================================= */
 
-.social-proof {
-  text-align: center;
-  max-width: min(900px, calc(100% - 48px));
+.examples-callout {
+  max-width: 680px;
   margin: 24px auto 32px;
-  padding: 16px 32px;
+  padding: 24px 32px;
   background: var(--primary-light);
   border: 1px solid var(--primary);
   border-radius: 8px;
-  line-height:1.4;
 }
 
-.social-proof p {
+.examples-header {
   font-size: 1.15rem;
   color: var(--text);
   font-weight: 400;
+  text-align: center;
+  margin-bottom: 20px;
+  line-height: 1.4;
 }
 
-.social-proof strong {
+.examples-header strong {
   color: var(--primary);
   font-weight: 700;
+}
+
+.examples-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.example-item {
+  padding: 12px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.4;
+  transition: background 0.15s;
+}
+
+.example-item:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.example-link {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
 }
 
 /* =============================================================================
@@ -1567,8 +1595,17 @@ footer a:hover {
     padding: 24px 20px;
   }
 
-  .social-proof {
-    max-width: calc(100% - 40px);
+  .examples-wrapper {
+    padding: 0 20px;
+  }
+  
+  .examples-callout {
+    max-width: 680px;
+    padding: 20px 16px;
+  }
+
+  .examples-list {
+    grid-template-columns: 1fr;
   }
 
   .login-card {
