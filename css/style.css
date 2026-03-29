@@ -12,10 +12,20 @@
 
 @font-face {
   font-family: 'Roboto';
+  src: url('../fonts/Roboto-Italic-subset.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0020, U+0041-005A, U+0061-007A;
+}
+
+@font-face {
+  font-family: 'Roboto';
   src: url('../fonts/Roboto-Italic-VariableFont.woff2') format('woff2');
   font-weight: 100 900;
   font-style: italic;
   font-display: swap;
+  unicode-range: U+0021-0040, U+005B-0060, U+007B-10FFFF;
 }
 
 * {
