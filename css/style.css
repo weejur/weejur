@@ -373,6 +373,7 @@ body {
 .hero-right img {
   width: 100%;
   height: auto;
+  aspect-ratio: 619 / 403;
   border-radius: var(--radius-lg);
 }
 
