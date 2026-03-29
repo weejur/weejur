@@ -97,7 +97,9 @@ function openDeleteModal(repoName) {
   $("delete-confirm-input").value = "";
   $("btn-delete-confirm").disabled = true;
   $("delete-modal").hidden = false;
-  $("delete-confirm-input").focus();
+  if (window.matchMedia("(pointer: fine)").matches) {
+    $("delete-confirm-input").focus();
+  }
 }
 
 function closeDeleteModal() {
