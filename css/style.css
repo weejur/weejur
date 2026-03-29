@@ -1005,6 +1005,7 @@ body {
   align-items: center;
   gap: 10px;
   color: var(--text);
+  line-height: 1.3;
 }
 
 .site-status-spinner {
@@ -1336,6 +1337,11 @@ footer a:hover {
   background: white;
   color: var(--text);
   transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.modal-input,
+.modal-actions .btn {
+  touch-action: manipulation;
 }
 
 .modal-input:focus {

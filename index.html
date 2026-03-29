@@ -208,12 +208,16 @@
       $("btn-publish-cta").hidden = !$("html-paste").value.trim();
     });
 
-    // Save files to IndexedDB and open login modal
+    // Save files to IndexedDB and go to new.html (if logged in) or open login modal
     $("btn-publish-cta").addEventListener("click", async () => {
       const files = picker.getFiles() || picker.getPastedFiles();
       if (!files) return;
       await savePendingFiles(files);
-      openLoginModal('Log in with GitHub to <span style="white-space:nowrap">publish your site</span>');
+      if (getToken()) {
+        window.location.href = "/new";
+      } else {
+        openLoginModal('Log in with GitHub to <span style="white-space:nowrap">publish your site</span>');
+      }
     });
 
     // --- Login modal logic ---
