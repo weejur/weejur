@@ -371,13 +371,20 @@ body {
 }
 
 .hero-right .hero-img-wrap {
-  aspect-ratio: 619 / 403;
+  position: relative;
   width: 100%;
+  padding-bottom: 65.1%; /* 403/619 — reserves space before image loads */
+  height: 0;
+  overflow: hidden;
 }
 
 .hero-right img {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   border-radius: var(--radius-lg);
 }
 
@@ -1598,7 +1605,8 @@ footer a:hover {
     margin: 0 auto;
   }
 
-  .hero-right .hero-img-wrap {
+  .hero-right {
+    width: 100%;
     max-width: 300px;
     margin: 0 auto;
   }
